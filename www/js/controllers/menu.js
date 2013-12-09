@@ -9,7 +9,7 @@ function MenuCtrl($scope, connect, navigation, $rootScope, $sce) {
         $.mobile.loading('show');
         connect.sync(function(){
             $.mobile.loading("hide");
-            location.hash = "#main_page";
+            $.mobile.changePage("#main_page",{transition:"slide"});
         })
     };
 }

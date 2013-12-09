@@ -92,6 +92,7 @@
   top: .3em;
   margin-right: 0.15em;
   line-height: 0;
+  vertical-align: top;
 }
 #main_menu ul li a:hover,
 #main_menu ul li a:active {

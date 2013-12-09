@@ -30,7 +30,7 @@
     });
 
     setTimeout(function(){
-        location.hash = "#auth_page";
+        $.mobile.changePage("#auth_page");
     },0);
 
     global.app = angular.module('fitApp',[]);
