@@ -1,0 +1,79 @@
+
+@font-face {
+	font-family: 'fit-icon';
+	src: url('fit-icon.eot?') format('eot'), 
+	     url('fit-icon.woff') format('woff'), 
+	     url('fit-icon.ttf')  format('truetype'),
+	     url('fit-icon.svg#fit-icon') format('svg');
+}
+
+[class*="fit-icon-"]{
+    display: inline-block;
+    font-family: 'fit-icon';
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.fit-icon-large{
+    font-size: 3em;
+}
+.fit-icon-big{
+    font-size: 2.5em;
+}
+.fit-icon-mid{
+    font-size: 2em;
+}
+
+.fit-icon-schedules:before {
+    content: "a";
+}
+.fit-icon-comment:before {
+    content: "b";
+}
+.fit-icon-pencil:before {
+    content: "c";
+}
+.fit-icon-date:before {
+    content: "d";
+}
+.fit-icon-edit:before {
+    content: "e";
+}
+.fit-icon-save:before {
+    content: "f";
+}
+.fit-icon-settings:before {
+    content: "g";
+}
+.fit-icon-exit:before {
+    content: "h";
+}
+.fit-icon-add:before {
+    content: "i";
+}
+.fit-icon-up:before {
+    content: "j";
+}
+.fit-icon-down:before {
+    content: "k";
+}
+.fit-icon-refresh:before {
+    content: "l";
+}
+.fit-icon-remove:before {
+    content: "m";
+}
+.fit-icon-right-arrow:before {
+    content: "n";
+}
+.fit-icon-left-arrow:before {
+    content: "o";
+}
+
+.fit-icon-charge:before {
+    content: "p";
+}
+
+

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html ng-app="fitApp">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title></title>
+    <link rel="stylesheet" href="/libs/jquery.mobile-1.4.0-rc.1/jquery.mobile-1.4.0-rc.1.css">
+    <link rel="stylesheet" href="/fonts/fit-icon/styles.css">
+    <link rel="stylesheet" href="/libs/mobipick/css/mobipick.css">
+    <link rel="stylesheet" href="/stylesheets/ui.css">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+  </head>
+  <body>
+    <div id="auth_page" data-role="page" data-quicklinks="true" data-theme="b" ng-controller="AuthCtrl" class="hide">
+      <div data-role="content">
+        <h1>FITMUS</h1>
+        <aside>
+          VERSION
+          &nbsp;<em>2.0</em>
+        </aside>
+        <input id="login" type="text" data-clear-btn="true" name="text-3" placeholder="Логин" data-theme="a" ng-model="user" class="ui-corner-none">
+        <input id="pass" type="password" data-clear-btn="true" name="text-3" placeholder="Пароль" data-theme="a" ng-model="pass" class="ui-corner-none"><a _href="#main_page" ng-click="login()" class="ui-input-btn ui-btn ui-min">Войти</a>
+      </div>
+      <div data-role="footer" data-position="fixed">
+        <ul>
+          <li><a href="http://fitmus.com">О проекте</a></li>
+          <li><a href="http://fitmus.com/auth/registration">Регистрация</a></li>
+        </ul>
+      </div>
+    </div>
+    <div id="main_page" data-role="page" data-quicklinks="true" ng-controller="MainCtrl" class="hide">
+      <div data-role="header" data-position="fixed">
+        <h2><span class="fit-logo">F</span>Расписание</h2><a href="#" class="main_menu-link ui-btn ui-btn-no-border ui-btn-left"><i class="fit-icon-big fit-icon-schedules"></i></a>
+        <div class="btn-group-right"><a href="#cooment_popup" data-rel="popup" data-transition="pop" class="ui-btn ui-btn-no-border"><i class="fit-icon-large fit-icon-comment"></i></a><a href="#" ng-click="toggleState()" ng-class="edit_mode?'ui-btn-active':''" class="ui-btn ui-btn-no-border"><i class="fit-icon-large fit-icon-pencil"></i></a><a href="#" class="ui-btn ui-btn-no-border"><i class="fit-icon-large fit-icon-date"></i>
+            <input type="date" data-input-hide="true" ng-model="select_date" ng-mobipick="{ locale: &quot;ru&quot;, buttonTheme: &quot;a&quot;, popup:{ theme: &quot;b&quot; } }"></a></div>
+        <div style="border-bottom: 1px solid #030303;"></div>
+        <div data-role="navbar"><a href="#" ng-click="prevDay()" class="ui-btn ui-btn-no-border ui-btn-left"><i class="fit-icon-large fit-icon-left-arrow"></i></a><a href="#" ng-click="nextDay()" class="ui-btn ui-btn-no-border ui-btn-right"><i class="fit-icon-large fit-icon-right-arrow"></i></a>
+          <div class="date-header">
+            <h3>{{select_timestamp*1000 | date: 'EEEE'}}</h3>
+            <p>{{select_timestamp*1000 | date: 'd MMMM yyyy'}}</p>
+          </div>
+        </div>
+      </div>
+      <div data-role="content">
+        <ul data-role="listview" ng-class="edit_mode?'with-control':''">
+          <li ng-repeat="train in select_trains "><img src="{{exercises[train.id_exercise].img}}" class="exercise-img">
+            <div ng-chose-mode="train" class="li-content"><a href="#" ng-click="select(train)">
+                <h3 ng-color-mode>{{exercises[train.id_exercise].name}}</h3></a>
+              <p>{{musclegroups[train.id_muscle_group]}}</p><a href="#" ng-next-mode class="ui-btn ui-btn-no-border ui-btn-bottom-right"><i class="fit-icon-mid fit-icon-charge"></i></a>
+            </div>
+            <div class="li-control ui-grid-d center">
+              <div class="ui-block-a"><a href="#" ng-click="addAfter(train)" class="ui-btn ui-btn-no-border"><i class="fit-icon-large fit-icon-add"></i></a></div>
+              <div class="ui-block-b"><a href="#" ng-click="positionUp(train)" class="ui-btn ui-btn-no-border"><i class="fit-icon-large fit-icon-up"></i></a></div>
+              <div class="ui-block-c"><a href="#" ng-click="positionDown(train)" class="ui-btn ui-btn-no-border"><i class="fit-icon-large fit-icon-down"></i></a></div>
+              <div class="ui-block-d"><a href="#" ng-click="replace(train)" class="ui-btn ui-btn-no-border"><i class="fit-icon-large fit-icon-refresh"></i></a></div>
+              <div class="ui-block-e"><a href="#" ng-click="remove(train)" class="ui-btn ui-btn-no-border"><i class="fit-icon-large fit-icon-remove"></i></a></div>
+            </div>
+          </li>
+          <li ng-if="!select_trains.length">
+            <div class="li-control ui-grid-d center">
+              <div class="ui-block-a"><a href="#select_muscle_page" class="ui-btn ui-btn-no-border"><i class="fit-icon-large fit-icon-add"></i></a></div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div id="exercise_page" data-role="page" data-quicklinks="true" ng-controller="ExerciseCtrl" class="hide">
+      <div data-role="header" data-position="fixed">
+        <h2><span class="fit-logo">F</span>{{select_timestamp*1000 | date: 'EEEE'}},&nbsp;<span class="small">{{select_timestamp*1000 | date: 'd MMMM'}}</span></h2><a href="#main_page" class="ui-btn ui-btn-no-border ui-btn-left less-left"><i class="fit-icon-large fit-icon-left-arrow"></i></a>
+        <div class="btn-group-right"><a href="#cooment_popup" data-rel="popup" data-transition="pop" class="ui-btn ui-btn-no-border"><i class="fit-icon-large fit-icon-comment"></i></a></div>
+        <div data-role="navbar">
+          <ul>
+            <li><a href="//fitmus.com/exercise/id/{{select_train.id_exercise}}" ng-external-link>Упражнение</a></li>
+            <li><a href="//fitmus.com/muscle/group/{{select_train.id_muscle_group}}" ng-external-link>Мишца</a></li>
+          </ul>
+        </div>
+      </div>
+      <div data-role="content">
+        <ul data-role="listview">
+          <li><img src="{{exercises[select_train.id_exercise].img}}" class="exercise-img">
+            <div ng-chose-mode="select_train" class="li-content">
+              <h3 ng-color-mode>{{exercises[select_train.id_exercise].name}}</h3>
+              <p>{{musclegroups[select_train.id_muscle_group]}}</p><a href="#" ng-next-mode class="ui-btn ui-btn-no-border ui-btn-bottom-right"><i class="fit-icon-mid fit-icon-charge"></i></a>
+            </div>
+          </li>
+          <li ng-repeat="(index,approach) in select_train.result| orderIntKey:-1">
+            <div ng-approach="approach">
+              <table>
+                <tr>
+                  <td>{{index+1}}</td>
+                  <td>
+                    <div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset ui-input-has-additional">
+                      <input type="number" value="10.88" min="0.00" ng-approach-result-1 class="no-jqm-widget"><a href="#" class="ui-btn ui-input-add grey">BLANK</a>
+                    </div>
+                  </td>
+                  <td>X</td>
+                  <td>
+                    <div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset ui-input-has-additional">
+                      <input type="number" value="10.88" min="0.00" ng-approach-result-2 class="no-jqm-widget"><a href="#" class="ui-btn ui-input-add grey">BLANK</a>
+                    </div>
+                  </td>
+                </tr>
+                <tr class="for-time">
+                  <td><a href="#" ng-click="remove(index+1)" class="ui-btn ui-btn-no-border ui-btn-short"><i class="fit-icon-mid fit-icon-remove"></i></a></td>
+                  <td>
+                    <div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset ui-input-has-additional">
+                      <input type="text" value="00:00" ng-approach-rest readonly class="no-jqm-widget"><a href="#" class="ui-btn ui-input-add two-line">Отдых<br><i class="ui-icon-clock-fix"></i></a>
+                    </div>
+                  </td>
+                  <td></td>
+                  <td>
+                    <div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset ui-input-has-additional">
+                      <input type="text" value="00:00" ng-approach-work readonly class="no-jqm-widget"><a href="#" class="ui-btn ui-input-add purple two-line">Работа<br><i class="ui-icon-clock-fix"></i></a>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+              <dl class="left">
+                <dt class="for-no-time-inline"><a href="#" ng-click="remove(index+1)" class="ui-btn ui-btn-no-border ui-btn-short"><i class="fit-icon-mid fit-icon-remove"></i></a></dt>
+                <dd>БЫЛО:</dd>
+                <dt>95 x 8</dt>
+              </dl>
+              <dl class="right for-time">
+                <dd>Отдых:</dd>
+                <dt class="lime">01:30</dt>
+                <dd>Работа:</dd>
+                <dt class="purple">00:12</dt>
+              </dl>
+              <div class="clearfix"></div>
+            </div>
+          </li>
+          <!--li
+          <table>
+            <tr>
+              <td>1</td>
+              <td>
+                <input type="number" value="10.88" data-additional-btn="true" data-additional-btn-content="КГ">
+              </td>
+              <td>X</td>
+              <td>
+                <input type="number" value="112" data-additional-btn="true" data-additional-btn-class="grey" data-additional-btn-content="РАЗ">
+              </td>
+            </tr>
+            <tr>
+              <td><a href="#" class="ui-btn ui-btn-no-border ui-btn-short"><i class="fit-icon-mid fit-icon-remove"></i></a></td>
+              <td>
+                <input type="number" value="10.88" data-additional-btn="true" data-additional-btn-class="two-line" data-additional-btn-content="Отдых&lt;br&gt;&lt;i class='ui-icon-clock-fix'/&gt;">
+              </td>
+              <td></td>
+              <td>
+                <input type="number" value="10.88" data-additional-btn="true" data-additional-btn-class="two-line purple" data-additional-btn-content="Работа&lt;br&gt;&lt;i class='ui-icon-clock-fix'/&gt;">
+              </td>
+            </tr>
+          </table>
+          <dl class="left">
+            <dd>БЫЛО:</dd>
+            <dt>95 x 8</dt>
+          </dl>
+          <dl class="right">
+            <dd>Отдых:</dd>
+            <dt class="lime">01:30</dt>
+            <dd>Работа:</dd>
+            <dt class="purple">00:12</dt>
+          </dl>
+          <div class="clearfix"></div>
+          -->
+        </ul>
+      </div>
+    </div>
+    <div id="select_muscle_page" data-role="page" data-quicklinks="true" ng-controller="MuscleCtrl" class="hide">
+      <div data-role="header" data-position="fixed">
+        <h2><span class="fit-logo">F</span>Добавить упражнение</h2><a href="#main_page" class="ui-btn ui-btn-no-border ui-btn-left less-left"><i class="fit-icon-large fit-icon-left-arrow"></i></a>
+      </div>
+      <div data-role="content">
+        <ul data-role="listview" class="hide-link">
+          <li ng-repeat="(id, musclegroup) in musclegroups"><a href="#select_exercise_page?{{id}}">{{musclegroup}}</a></li>
+        </ul>
+      </div>
+    </div>
+    <div id="select_exercise_page" data-role="page" data-quicklinks="true" ng-controller="SelectExerciseCtrl" class="hide">
+      <div data-role="header" data-position="fixed">
+        <h2><span class="fit-logo">F</span>Добавить упражнение</h2><a href="#select_muscle_page" class="ui-btn ui-btn-no-border ui-btn-left less-left"><i class="fit-icon-large fit-icon-left-arrow"></i></a>
+      </div>
+      <div data-role="content">
+        <ul data-role="listview">
+          <li ng-repeat="(id, exercise) in exercises | inRangeInt: musclegroup_exercises[muscle_id] "><img src="{{exercise.img}}" class="exercise-img">
+            <div class="li-content">
+              <h3 class="blue">{{exercise.name}}</h3>
+              <p>{{musclegroups[muscle_id]}}</p>
+            </div><a href="#main_page?{{exercise.id}}" class="ui-btn ui-btn-no-border ui-btn-bottom-right"><i class="fit-icon-big fit-icon-add"></i></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div id="note_page" data-role="page" data-quicklinks="true" ng-controller="NoteCtrl" class="hide">
+      <div data-role="header" data-position="fixed">
+        <h2><span class="fit-logo">F</span>Записи</h2><a href="#" class="main_menu-link ui-btn ui-btn-no-border ui-btn-left"><i class="fit-icon-big fit-icon-schedules"></i>
+          <div class="btn-group-right"><a href="#cooment_popup" data-rel="popup" data-transition="pop" class="ui-btn ui-btn-no-border"><i class="fit-icon-large fit-icon-comment"></i></a><a href="#" class="ui-btn ui-btn-no-border"><i class="fit-icon-large fit-icon-date"></i>
+              <input type="date" data-input-hide="true" ng-model="select_date" ng-mobipick="{ locale: &quot;ru&quot;, buttonTheme: &quot;a&quot;, popup:{ theme: &quot;b&quot; } }"></a></div>
+          <div style="border-bottom: 1px solid #030303;"></div>
+          <div data-role="navbar"><a href="#" ng-click="prevDay()" class="ui-btn ui-btn-no-border ui-btn-left"><i class="fit-icon-large fit-icon-left-arrow"></i></a><a href="#" ng-click="nextDay()" class="ui-btn ui-btn-no-border ui-btn-right"><i class="fit-icon-large fit-icon-right-arrow"></i></a>
+            <div class="date-header">
+              <h3>{{select_timestamp*1000 | date: 'EEEE'}}</h3>
+              <p>{{select_timestamp*1000 | date: 'd MMMM yyyy'}}</p>
+            </div>
+          </div></a>
+      </div>
+      <div data-role="content" class="short">
+        <textarea ng-model="select_note.note">orem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века. В то время некий безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя Lorem Ipsum для распечатки образцов</textarea>
+      </div>
+    </div>
+    <div id="settings_page" data-role="page" data-quicklinks="true" data-theme="b" ng-controller="SettingsCtrl" class="hide">
+      <div data-role="header" data-position="fixed">
+        <h2><span class="fit-logo">F</span>Настройки</h2><a href="#" class="main_menu-link ui-btn ui-btn-no-border ui-btn-left"><i class="fit-icon-big fit-icon-schedules"></i></a>
+        <div style="border-bottom: 1px solid #030303;"></div>
+      </div>
+      <div data-role="content">
+        <h3>Внешний вид</h3>
+        <h4>Отображать время
+          <input type="checkbox" ng-model="settings.is_show_time">
+        </h4>
+        <h4>Единицы веса
+          <div ng-chose-unit="settings.weight_unit" ng-chose-unit-data="units.weight" class="ui-btn">КГ</div>
+        </h4>
+        <h4>Единицы расстояния
+          <div ng-chose-unit="settings.distance_unit" ng-chose-unit-data="units.distance" class="ui-btn"> КМ</div>
+        </h4>
+        <h3>Синхронизация</h3>
+        <h4>Автоматическая синхрозизацыя
+          <input type="checkbox" ng-model="settings.is_auto_update">
+        </h4>
+        <h3>Аккаунт</h3>
+        <h4><a href="#auth_page">Вход под другим аккаунтом</a></h4>
+      </div>
+    </div>
+    <div id="cooment_popup" data-theme="b" class="hide ui-fit-popup">
+      <p ng-bind-html="comment"></p>
+      <!--  | <b>Lorem Ipsum</b> - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века. В то время некий безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя Lorem Ipsum для распечатки образцов. Lorem Ipsum не только успешно пережил без заметных изменений пять веков, но и перешагнул в электронный дизайн. Его популяризации в новое время послужили публикация листов Letraset с образцами Lorem Ipsum в 60-х годах и, в более недавнее время, программы электронной вёрстки типа Aldus PageMaker, в шаблонах которых используется Lorem Ipsum.-->
+    </div>
+    <div id="main_menu" data-role="panel" data-position="left" data-display="overlay" data-theme="b" ng-controller="MenuCtrl" class="hide">
+      <ul>
+        <li><a href="#main_page"><i class="fit-icon-schedules"></i>Расписание</a></li>
+        <li><a href="#note_page"><i class="fit-icon-edit"></i>Записи</a></li>
+        <li><a href="#" ng-click="sync()"><i class="fit-icon-save"></i>Синзронизацыя</a></li>
+        <li><a href="#settings_page"><i class="fit-icon-settings"></i>Настройка</a></li>
+        <li><a href="#auth_page"><i class="fit-icon-exit"></i>Виход</a></li>
+      </ul>
+    </div>
+    <!--script(src='/libs/mobipick/external/modernizr.custom.min.js')-->
+    <script src="/libs/jquery-2.0.3.js"></script>
+    <script src="/libs/jquery.mobile-1.4.0-rc.1/jquery.mobile-1.4.0-rc.1.js"></script>
+    <script src="/js/utils/jquery.mobile.fix.js"></script>
+    <script src="/libs/angular-1.2.2/angular.js"></script>
+    <script src="/libs/angular-1.2.2/i18n/angular-locale_ru-ru.js"></script>
+    <script src="/libs/lodash.js"></script>
+    <script src="/js/utils/lodash.fix.js"></script>
+    <script src="/libs/async.js"></script>
+    <script src="/libs/md5.js"></script>
+    <script src="/libs/sprintf.js"></script>
+    <script src="/libs/mobipick/external/xdate.js"></script>
+    <script src="/libs/mobipick/external/xdate.i18n.js"></script>
+    <script src="/libs/mobipick/js/mobipick.js"></script>
+    <script src="/js/controllers/auth.js"></script>
+    <script src="/js/controllers/main.js"></script>
+    <script src="/js/controllers/muscle.js"></script>
+    <script src="/js/controllers/selectExercise.js"></script>
+    <script src="/js/controllers/exercise.js"></script>
+    <script src="/js/controllers/settings.js"></script>
+    <script src="/js/controllers/note.js"></script>
+    <script src="/js/controllers/menu.js"></script>
+    <script src="/js/app.js"></script>
+    <script src="/js/directives/mobipick.js"></script>
+    <script src="/js/directives/choseMode.js"></script>
+    <script src="/js/directives/choseUnit.js"></script>
+    <script src="/js/directives/approach.js"></script>
+    <script src="/js/services/connect.js"></script>
+    <script src="/js/services/navigation.js"></script>
+    <script src="/js/filters/inRangeInt.js"></script>
+    <script src="/js/filters/orderIntKey.js"></script>
+  </body>
+</html>

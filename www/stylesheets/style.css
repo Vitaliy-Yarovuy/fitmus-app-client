@@ -1,0 +1,261 @@
+[data-role='page'] {
+  background-size: cover!important;
+}
+/*
+[data-role='page'] > * {
+  opacity: 0.8;
+}
+
+#auth_page{
+  background: url(../img/bg/auth.png) 0 -27px no-repeat;
+}
+
+#main_page{
+  background: url(../img/bg/main.png) 0 -27px no-repeat;
+}
+
+#main_edit_page{
+  background: url(../img/bg/main_mode_edit.png) 0 -27px no-repeat;
+}
+
+#exercise_page{
+  background: url(../img/bg/exercise_full.png) 0 -27px no-repeat;
+}
+
+#comment_page{
+  background: url(../img/bg/comment.png) 0 -27px no-repeat;
+}
+
+#note_page{
+  background: url(../img/bg/note.png) 0 -27px no-repeat;
+}
+
+#settings_page{
+  background: url(../img/bg/settings.png) 0 -27px no-repeat;
+}
+
+#select_exercise_page{
+  background: url(../img/bg/select_exercise.png) 0 -27px no-repeat;
+}
+
+#select_muscle_page{
+  background: url(../img/bg/select_muscle.png) 0 -27px no-repeat;
+}
+/**/
+.fit-logo {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  border: 2px solid #fff;
+  color: #fff;
+  padding: 0.05em;
+  font-size: 1.5em;
+  vertical-align: middle;
+  text-align: center;
+  line-height: 1;
+  margin-right: 0.1em;
+  background-color: #111111;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #4a4a4a), color-stop(100% #000000));
+  background-image: -webkit-linear-gradient(top, #4a4a4a 0%, #000000 100%);
+  background-image: -moz-linear-gradient(top, #4a4a4a 0%, #000000 100%);
+  background-image: -ms-linear-gradient(top, #4a4a4a 0%, #000000 100%);
+  background-image: -o-linear-gradient(top, #4a4a4a 0%, #000000 100%);
+  background-image: linear-gradient(top, #4a4a4a 0%, #000000 100%);
+}
+#main_menu {
+  top: 3.09em;
+  bottom: 0;
+  min-height: 70%;
+  background: #515151;
+}
+#main_menu .ui-panel-inner {
+  padding-top: .5em;
+  padding-left: 0;
+  padding-right: 0;
+}
+#main_menu ul {
+  margin: 0;
+  font-size: 1.4em;
+  list-style: none;
+  padding: 0;
+}
+#main_menu ul li a {
+  display: block;
+  color: #fff;
+  text-decoration: none;
+  font-weight: normal;
+  padding: .65em .6em .6em;
+}
+#main_menu ul li a i {
+  font-size: 2em;
+  position: relative;
+  top: .3em;
+  margin-right: 0.15em;
+  line-height: 0;
+}
+#main_menu ul li a:hover,
+#main_menu ul li a:active {
+  background: #3B3B3B;
+}
+#auth_page {
+  background: #1E1E1E;
+}
+#auth_page .ui-content {
+  padding: 1em 2em;
+}
+#auth_page h1 {
+  color: #fff;
+  margin: .9em 0 .1em 0;
+  font-size: 4.4em;
+  letter-spacing: -0.03em;
+  -webkit-transform: scale(1, 1.4);
+  -moz-transform: scale(1, 1.4);
+  -ms-transform: scale(1, 1.4);
+  -o-transform: scale(1, 1.4);
+  transform: scale(1, 1.4);
+  text-align: right;
+  line-height: 1;
+}
+#auth_page aside {
+  text-align: right;
+  font-size: .8em;
+  color: #8D8D8D;
+}
+#auth_page aside em {
+  font-weight: normal;
+  font-style: normal;
+  color: #fff;
+}
+#auth_page .ui-input-text {
+  margin: 2.2em -0.5em 0;
+}
+#auth_page .ui-input-text + .ui-input-text {
+  margin-top: .7em;
+}
+#auth_page .ui-input-btn {
+  background-color: #fb573f;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fb573f), color-stop(100% #ee422f));
+  background-image: -webkit-linear-gradient(top, #fb573f 0%, #ee422f 100%);
+  background-image: -moz-linear-gradient(top, #fb573f 0%, #ee422f 100%);
+  background-image: -ms-linear-gradient(top, #fb573f 0%, #ee422f 100%);
+  background-image: -o-linear-gradient(top, #fb573f 0%, #ee422f 100%);
+  background-image: linear-gradient(top, #fb573f 0%, #ee422f 100%);
+  color: #fff;
+  margin: 1.5em 2em;
+  font-weight: normal;
+}
+#auth_page .ui-footer {
+  border: none;
+  background: transparent;
+}
+#auth_page .ui-footer ul {
+  margin: 0 0 1.5em 0;
+  padding: 0;
+  text-align: center;
+  list-style: none;
+}
+#auth_page .ui-footer ul li {
+  display: inline-block;
+  padding: 0 1.2em;
+  line-height: .9;
+}
+#auth_page .ui-footer ul li + li {
+  border-left: 1px solid #fff ;
+}
+#auth_page .ui-footer ul li a {
+  font-size: 0.7em;
+  font-weight: normal;
+  text-decoration: none;
+}
+#auth_page .ui-footer ul li a:hover,
+#auth_page .ui-footer ul li a:active {
+  text-decoration: underline;
+}
+#settings_page .ui-content {
+  padding: .5em;
+  color: #fff;
+}
+#settings_page .ui-content h3 {
+  font-weight: normal;
+  text-transform: uppercase;
+  margin: 0.4em 0 0 0;
+  font-size: 1em;
+  border-bottom: 2px solid #fff;
+  padding: .2em;
+}
+#settings_page .ui-content h4 + h3 {
+  margin-top: 1.5em;
+}
+#settings_page .ui-content h4 {
+  font-weight: normal;
+  margin: 0;
+  font-size: 0.85em;
+  padding: 1.3em;
+}
+#settings_page .ui-content h4 + h4 {
+  border-top: 1px solid #fff;
+}
+#settings_page .ui-content h4 .ui-btn {
+  float: right;
+  margin: 0;
+  padding: 0.3em .6em;
+  font-weight: normal;
+  background: #E80000;
+  color: #fff;
+  border: 1px solid #212121;
+  line-height: 1.3;
+  font-size: 1em;
+  min-width: 1.5em;
+  position: relative;
+  top: -0.4em;
+}
+#settings_page .ui-content h4 .ui-btn:hover,
+#settings_page .ui-content h4 .ui-btn:active {
+  background: #FF0000;
+  color: #fff;
+}
+#settings_page .ui-content h4 .ui-checkbox {
+  float: right;
+}
+#settings_page .ui-content h4 .ui-checkbox input {
+  position: static;
+}
+#settings_page .ui-content h4 a {
+  color: inherit;
+  text-decoration: none;
+  font-size: 1em;
+  font-weight: normal;
+  margin: -0.7em;
+  padding: .7em;
+}
+#exercise_page .li-content,
+#main_page .li-content {
+  color: #9E9E9E;
+}
+#exercise_page .li-content a.ui-btn-bottom-right,
+#main_page .li-content a.ui-btn-bottom-right {
+  right: -0.5em;
+  bottom: -0.5em;
+  color: #9E9E9E;
+}
+#exercise_page .with-control .li-content a.ui-btn-bottom-right,
+#main_page .with-control .li-content a.ui-btn-bottom-right {
+  color: #333;
+}
+#select_exercise_page .ui-listview a.ui-btn-bottom-right {
+  color: #333;
+}
+#exercise_page .for-no-time-inline {
+  display: none;
+}
+#exercise_page .for-no-time-inline a {
+  display: inline-block;
+  vertical-align: bottom;
+  margin: -0.65em 0;
+}
+#exercise_page .no-time .for-time {
+  display: none;
+}
+#exercise_page .no-time .for-no-time-inline {
+  display: inline;
+}
