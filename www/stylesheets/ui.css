@@ -325,6 +325,8 @@ body.ui-overlay-a {
 }
 .ui-page .ui-content .ui-listview li table td .ui-input-text {
   margin: .2em 0;
+  width: 100%;
+  position: relative;
 }
 .ui-page .ui-content .ui-listview li dl {
   margin: 0 0 .2em;
