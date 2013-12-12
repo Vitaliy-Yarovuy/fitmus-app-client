@@ -73,6 +73,7 @@ body.ui-overlay-a {
 }
 .ui-input-has-additional {
   white-space: nowrap;
+  position: relative;
 }
 .ui-input-has-additional input {
   display: inline-block;

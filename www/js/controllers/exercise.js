@@ -8,7 +8,7 @@ function ExerciseCtrl($scope, connect, navigation, $rootScope, $sce, $timeout) {
         if($rootScope.select_train && !$rootScope.select_train.result){
             addEmptyResult();
         }
-        $rootScope.comment = $sce.trustAsHtml($rootScope.select_train.comment || "");
+        $rootScope.comment = $sce.trustAsHtml($rootScope.select_train && $rootScope.select_train.comment || "");
         updateList();
         $timeout(function(){
             $rootScope.$apply();
