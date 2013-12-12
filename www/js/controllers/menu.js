@@ -30,7 +30,7 @@ function MenuCtrl($scope, connect, navigation, $rootScope, $sce) {
         });
         connect.sync(function () {
             $.mobile.loading("hide");
-            navigator.app.exitApp();
+            navigator.app && navigator.app.exitApp();
         });
     };
 

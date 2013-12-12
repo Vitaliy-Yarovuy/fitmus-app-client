@@ -2,15 +2,17 @@
 
 /* Controllers */
 
-function ExerciseCtrl($scope, connect, navigation, $rootScope, $sce) {
+function ExerciseCtrl($scope, connect, navigation, $rootScope, $sce, $timeout) {
 
     navigation.beforePageChange("exercise_page",function(){
         if($rootScope.select_train && !$rootScope.select_train.result){
             addEmptyResult();
         }
         $rootScope.comment = $sce.trustAsHtml($rootScope.select_train.comment || "");
-        $rootScope.$apply();
         updateList();
+        $timeout(function(){
+            $rootScope.$apply();
+        },200);
     });
 
     navigation.beforePageLeave("exercise_page",function(){

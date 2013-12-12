@@ -18,12 +18,30 @@ body.ui-overlay-a {
 .clearfix:after {
   clear: both;
 }
-#cooment_popup-popup {
-  top: 3em!important;
-  left: .5em!important;
-  right: .5em!important;
-  bottom: .5em!important;
-  max-width: 120%!important;
+.ui-mobile [data-role=page],
+.ui-mobile [data-role=dialog],
+.ui-page {
+  display: block;
+  pointer-events: none;
+  opacity: 0;
+  -webkit-transform: translate3d(0, 0, 1px);
+  -moz-transform: translate3d(0, 0, 1px);
+  -ms-transform: translate3d(0, 0, 1px);
+  -o-transform: translate3d(0, 0, 1px);
+  transform: translate3d(0, 0, 1px);
+}
+.ui-mobile .ui-page-active {
+  pointer-events: auto;
+  opacity: 1;
+}
+.ie .ui-mobile [data-role=page],
+.ie .ui-mobile [data-role=dialog],
+.ie .ui-page {
+  display: none;
+  opacity: 1;
+}
+.ie .ui-mobile .ui-page-active {
+  display: block;
 }
 .ui-fit-popup {
   width: 100%;

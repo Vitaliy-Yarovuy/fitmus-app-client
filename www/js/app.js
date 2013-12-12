@@ -4,7 +4,9 @@
 //        location.hash = this.href.split("#")[1];
 //        return false;
 //    });
-
+//    if ($.browser.msie && $.browser.version < 11) {
+//        $("html").addClass("ie");
+//    }
     jQuery( function() {
         $(".hide").removeClass("hide");
         jQuery( "body>[data-role='panel']" ).panel();
