@@ -5,11 +5,11 @@
 function ExerciseCtrl($scope, connect, navigation, $rootScope, $sce) {
 
     navigation.beforePageChange("exercise_page",function(){
-        if(!$rootScope.select_train.result){
+        if($rootScope.select_train && !$rootScope.select_train.result){
             addEmptyResult();
         }
         $rootScope.comment = $sce.trustAsHtml($rootScope.select_train.comment || "");
-        $scope.$apply();
+        $rootScope.$apply();
         updateList();
     });
 

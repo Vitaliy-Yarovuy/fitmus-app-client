@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="./stylesheets/style.css">
   </head>
   <body>
+    <div id="empty_page" data-role="page" data-quicklinks="true" data-theme="b" class="hide"></div>
     <div id="auth_page" data-role="page" data-quicklinks="true" data-theme="b" ng-controller="AuthCtrl" class="hide">
       <div data-role="content">
         <h1>FITMUS</h1>
@@ -231,7 +232,7 @@
           <input type="checkbox" ng-model="settings.is_auto_update">
         </h4>
         <h3>Аккаунт</h3>
-        <h4><a href="#auth_page" data-transition="slideup">Вход под другим аккаунтом</a></h4>
+        <h4><a href="#" ng-click="logout()">Вход под другим аккаунтом</a></h4>
       </div>
     </div>
     <div id="cooment_popup" data-theme="b" class="hide ui-fit-popup">

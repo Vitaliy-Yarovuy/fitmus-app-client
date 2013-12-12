@@ -30,7 +30,6 @@ function AuthCtrl($scope, connect) {
                 $.mobile.loader("hide");
                 console.log(data);
                 setTimeout(function(){
-                    location.hash = "#main_page";
                     $.mobile.changePage("#main_page",{transition:"slideup"});
                 },0)
             });

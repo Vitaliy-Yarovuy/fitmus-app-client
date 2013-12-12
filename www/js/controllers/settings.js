@@ -12,6 +12,11 @@ function SettingsCtrl($scope, connect, navigation, $rootScope) {
     };
 
 
+    $scope.logout = function(){
+        connect.logout();
+        $.mobile.changePage("#auth_page",{transition:"slideup"});
+    };
+
     navigation.beforePageChange("settings_page",function(){
 
         connect.getData(function(err,data){

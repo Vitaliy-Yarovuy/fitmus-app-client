@@ -12,6 +12,16 @@ app.factory('connect',function ($rootScope){
             note: null
         }, loginListeners = [];
 
+    function saveToLocalStorage(){
+        window.localStorage["fitmus-app-user-data"] = JSON.stringify(userData);
+    }
+
+    function loadFromLocalStorage(){
+        if(window.localStorage["fitmus-app-user-data"]){
+            userData = JSON.parse(window.localStorage["fitmus-app-user-data"]);
+        }
+    }
+
     function getJSON(url,callback){
         if(!userData.user){
             callback({
@@ -79,6 +89,10 @@ app.factory('connect',function ($rootScope){
     }
 
     return {
+        isLogin: function(){
+            loadFromLocalStorage();
+            return !!userData.user;
+        },
         onLogin:function(callback){
             loginListeners.push(callback);
         },
@@ -90,6 +104,8 @@ app.factory('connect',function ($rootScope){
                 passwd:pass
             }).done(function(data){
                 userData.user = data.data;
+                userData.user.pass = pass;
+                saveToLocalStorage();
                 callback(data.error,data.data);
                 loginListeners.forEach(function(callback){
                     callback(null,data.data);
@@ -101,8 +117,14 @@ app.factory('connect',function ($rootScope){
             });
         },
         logout: function (callback){
-            userData.user = null;
-            callback();
+            userData = {
+                user: null,
+                data: null,
+                train: null,
+                note: null
+            };
+            saveToLocalStorage();
+            callback && callback();
         },
         getData: function(callback){
             if(userData.data){
@@ -143,6 +165,7 @@ app.factory('connect',function ($rootScope){
                 train: this.getTrain,
                 note: this.getNote
             },function(err,data){
+                saveToLocalStorage();
                 $rootScope.musclegroups = data.data.musclegroup;
                 $rootScope.exercises = data.data.exercise;
                 $rootScope.musclegroup_exercises = data.data.musclegroup_exercise;
@@ -181,6 +204,7 @@ app.factory('connect',function ($rootScope){
                     });
                 }
             },function(err, data){
+                saveToLocalStorage();
                 callback(err,data);
             });
         }

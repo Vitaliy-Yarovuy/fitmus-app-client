@@ -9,29 +9,38 @@
         $(".hide").removeClass("hide");
         jQuery( "body>[data-role='panel']" ).panel();
 
-        jQuery( ".main_menu-link" ).on( "click", function() {
-            jQuery( "#main_menu" ).panel( "open" );
-            return false;
-        });
 
         $( "#cooment_popup" ).enhanceWithin().popup({
             align: "0.5,0.5"
         });
-//        $("input[type='date']").mobipick({
-//            locale: "ru",
-//            buttonTheme: "a",
-//            popup:{
-//                theme: "b"
-//            }
-//        }).parents(".ui-btn").on("click",function(){
-//            $(this).find("input[type='date']").click();
-//            return false;
-//        });
     });
 
-    setTimeout(function(){
-        $.mobile.changePage("#auth_page");
-    },0);
+    $.mobile.loading( 'show', {
+        text: "loading",
+        textVisible: true,
+        theme: "b",
+        textonly: false,
+        html: ""
+    });
 
     global.app = angular.module('fitApp',[]);
+    app.run(function($rootScope,connect){
+        if(connect.isLogin()){
+            connect.getAll(function(err,data){
+                if(err){
+                    $.mobile.loading("hide");
+                    alert(err.message);
+                    return ;
+                }
+                $.mobile.loader("hide");
+                console.log(data);
+                setTimeout(function(){
+                    $.mobile.changePage("#main_page",{transition:"slideup"});
+                },0)
+            });
+        }else{
+            $.mobile.loader("hide");
+            $.mobile.changePage("#auth_page");
+        }
+    });
 })(window);
