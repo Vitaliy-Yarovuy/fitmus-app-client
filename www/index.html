@@ -34,7 +34,7 @@
       <div data-role="header" data-position="fixed">
         <h2><span class="fit-logo">F</span>Расписание</h2><a href="#" class="main_menu-link ui-btn ui-btn-no-border ui-btn-left"><i class="fit-icon-big fit-icon-schedules"></i></a>
         <div class="btn-group-right"><a href="#cooment_popup" data-rel="popup" data-transition="pop" class="ui-btn ui-btn-no-border"><i class="fit-icon-large fit-icon-comment"></i></a><a href="#" ng-click="toggleState()" ng-class="edit_mode?'ui-btn-active':''" class="ui-btn ui-btn-no-border"><i class="fit-icon-large fit-icon-pencil"></i></a><a href="#" class="ui-btn ui-btn-no-border"><i class="fit-icon-large fit-icon-date"></i>
-            <input type="date" data-input-hide="true" ng-model="select_date" ng-mobipick="{ locale: &quot;ru&quot;, buttonTheme: &quot;a&quot;, popup:{ theme: &quot;b&quot; } }"></a></div>
+            <input type="date" data-input-hide="true" ng-model="select_date" ng-mobipick-root="true" ng-mobipick="{ locale: &quot;ru&quot;, buttonTheme: &quot;a&quot;, popup:{ theme: &quot;b&quot; } }"></a></div>
         <div style="border-bottom: 1px solid #030303;"></div>
         <div data-role="navbar"><a href="#" ng-click="prevDay()" class="ui-btn ui-btn-no-border ui-btn-left"><i class="fit-icon-large fit-icon-left-arrow"></i></a><a href="#" ng-click="nextDay()" class="ui-btn ui-btn-no-border ui-btn-right"><i class="fit-icon-large fit-icon-right-arrow"></i></a>
           <div class="date-header">
@@ -198,7 +198,7 @@
       <div data-role="header" data-position="fixed">
         <h2><span class="fit-logo">F</span>Записи</h2><a href="#" class="main_menu-link ui-btn ui-btn-no-border ui-btn-left"><i class="fit-icon-big fit-icon-schedules"></i>
           <div class="btn-group-right"><a href="#cooment_popup" data-rel="popup" data-transition="pop" class="ui-btn ui-btn-no-border"><i class="fit-icon-large fit-icon-comment"></i></a><a href="#" class="ui-btn ui-btn-no-border"><i class="fit-icon-large fit-icon-date"></i>
-              <input type="date" data-input-hide="true" ng-model="select_date" ng-mobipick="{ locale: &quot;ru&quot;, buttonTheme: &quot;a&quot;, popup:{ theme: &quot;b&quot; } }"></a></div>
+              <input type="date" data-input-hide="true" ng-model="select_date" ng-mobipick-root="true" ng-mobipick="{ locale: &quot;ru&quot;, buttonTheme: &quot;a&quot;, popup:{ theme: &quot;b&quot; } }"></a></div>
           <div style="border-bottom: 1px solid #030303;"></div>
           <div data-role="navbar"><a href="#" ng-click="prevDay()" class="ui-btn ui-btn-no-border ui-btn-left"><i class="fit-icon-large fit-icon-left-arrow"></i></a><a href="#" ng-click="nextDay()" class="ui-btn ui-btn-no-border ui-btn-right"><i class="fit-icon-large fit-icon-right-arrow"></i></a>
             <div class="date-header">
