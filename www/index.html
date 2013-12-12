@@ -59,7 +59,7 @@
           </li>
           <li ng-if="!select_trains.length">
             <div class="li-control ui-grid-d center">
-              <div class="ui-block-a"><a href="#select_muscle_page" data-transition="slide" class="ui-btn ui-btn-no-border"><i class="fit-icon-large fit-icon-add"></i></a></div>
+              <div class="ui-block-a"><a href="#select_muscle_page" data-transition="slideup" class="ui-btn ui-btn-no-border"><i class="fit-icon-large fit-icon-add"></i></a></div>
             </div>
           </li>
         </ul>
@@ -67,12 +67,12 @@
     </div>
     <div id="exercise_page" data-role="page" data-quicklinks="true" ng-controller="ExerciseCtrl" class="hide">
       <div data-role="header" data-position="fixed">
-        <h2><span class="fit-logo">F</span>{{select_timestamp*1000 | date: 'EEEE'}},&nbsp;<span class="small">{{select_timestamp*1000 | date: 'd MMMM'}}</span></h2><a href="#main_page" data-transition="slide" class="ui-btn ui-btn-no-border ui-btn-left less-left"><i class="fit-icon-large fit-icon-left-arrow"></i></a>
+        <h2><span class="fit-logo">F</span>{{select_timestamp*1000 | date: 'EEEE'}},&nbsp;<span class="small">{{select_timestamp*1000 | date: 'd MMMM'}}</span></h2><a href="#main_page" data-transition="slideup" class="ui-btn ui-btn-no-border ui-btn-left less-left"><i class="fit-icon-large fit-icon-left-arrow"></i></a>
         <div class="btn-group-right"><a href="#cooment_popup" data-rel="popup" data-transition="pop" class="ui-btn ui-btn-no-border"><i class="fit-icon-large fit-icon-comment"></i></a></div>
         <div data-role="navbar">
           <ul>
-            <li><a href="//fitmus.com/exercise/id/{{select_train.id_exercise}}" ng-external-link>Упражнение</a></li>
-            <li><a href="//fitmus.com/muscle/group/{{select_train.id_muscle_group}}" ng-external-link>Мишца</a></li>
+            <li><a href="http://fitmus.com/exercise/id/{{select_train.id_exercise}}" target="_blank">Упражнение</a></li>
+            <li><a href="http://fitmus.com/muscle/group/{{select_train.id_muscle_group}}" target="_blank">Мишца</a></li>
           </ul>
         </div>
       </div>
@@ -170,17 +170,17 @@
     </div>
     <div id="select_muscle_page" data-role="page" data-quicklinks="true" ng-controller="MuscleCtrl" class="hide">
       <div data-role="header" data-position="fixed">
-        <h2><span class="fit-logo">F</span>Добавить упражнение</h2><a href="#main_page" data-transition="slide" class="ui-btn ui-btn-no-border ui-btn-left less-left"><i class="fit-icon-large fit-icon-left-arrow"></i></a>
+        <h2><span class="fit-logo">F</span>Добавить упражнение</h2><a href="#main_page" data-transition="slideup" class="ui-btn ui-btn-no-border ui-btn-left less-left"><i class="fit-icon-large fit-icon-left-arrow"></i></a>
       </div>
       <div data-role="content">
         <ul data-role="listview" class="hide-link">
-          <li ng-repeat="(id, musclegroup) in musclegroups"><a href="#select_exercise_page?{{id}}" data-transition="slide">{{musclegroup}}</a></li>
+          <li ng-repeat="(id, musclegroup) in musclegroups"><a href="#select_exercise_page?{{id}}" data-transition="slideup">{{musclegroup}}</a></li>
         </ul>
       </div>
     </div>
     <div id="select_exercise_page" data-role="page" data-quicklinks="true" ng-controller="SelectExerciseCtrl" class="hide">
       <div data-role="header" data-position="fixed">
-        <h2><span class="fit-logo">F</span>Добавить упражнение</h2><a href="#select_muscle_page" data-transition="slide" class="ui-btn ui-btn-no-border ui-btn-left less-left"><i class="fit-icon-large fit-icon-left-arrow"></i></a>
+        <h2><span class="fit-logo">F</span>Добавить упражнение</h2><a href="#select_muscle_page" data-transition="slideup" class="ui-btn ui-btn-no-border ui-btn-left less-left"><i class="fit-icon-large fit-icon-left-arrow"></i></a>
       </div>
       <div data-role="content">
         <ul data-role="listview">
@@ -188,7 +188,7 @@
             <div class="li-content">
               <h3 class="blue">{{exercise.name}}</h3>
               <p>{{musclegroups[muscle_id]}}</p>
-            </div><a href="#main_page?{{exercise.id}}" data-transition="slide" class="ui-btn ui-btn-no-border ui-btn-bottom-right"><i class="fit-icon-big fit-icon-add"></i></a>
+            </div><a href="#main_page?{{exercise.id}}" data-transition="slideup" class="ui-btn ui-btn-no-border ui-btn-bottom-right"><i class="fit-icon-big fit-icon-add"></i></a>
           </li>
         </ul>
       </div>
@@ -231,7 +231,7 @@
           <input type="checkbox" ng-model="settings.is_auto_update">
         </h4>
         <h3>Аккаунт</h3>
-        <h4><a href="#auth_page" data-transition="slide">Вход под другим аккаунтом</a></h4>
+        <h4><a href="#auth_page" data-transition="slideup">Вход под другим аккаунтом</a></h4>
       </div>
     </div>
     <div id="cooment_popup" data-theme="b" class="hide ui-fit-popup">
@@ -240,11 +240,11 @@
     </div>
     <div id="main_menu" data-role="panel" data-position="left" data-display="overlay" data-theme="b" ng-controller="MenuCtrl" class="hide">
       <ul>
-        <li><a href="#main_page" data-transition="slide"><i class="fit-icon-schedules"></i>Расписание</a></li>
-        <li><a href="#note_page" data-transition="slide"><i class="fit-icon-edit"></i>Записи</a></li>
+        <li><a href="#main_page" data-transition="slideup"><i class="fit-icon-schedules"></i>Расписание</a></li>
+        <li><a href="#note_page" data-transition="slideup"><i class="fit-icon-edit"></i>Записи</a></li>
         <li><a href="#" ng-click="sync()"><i class="fit-icon-save"></i>Синзронизацыя</a></li>
-        <li><a href="#settings_page" data-transition="slide"><i class="fit-icon-settings"></i>Настройка</a></li>
-        <li><a href="#auth_page" data-transition="slide"><i class="fit-icon-exit"></i>Виход</a></li>
+        <li><a href="#settings_page" data-transition="slideup"><i class="fit-icon-settings"></i>Настройка</a></li>
+        <li><a href="#auth_page" data-transition="slideup"><i class="fit-icon-exit"></i>Виход</a></li>
       </ul>
     </div>
     <!--script(src='./libs/mobipick/external/modernizr.custom.min.js')-->

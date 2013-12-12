@@ -84,16 +84,16 @@ function MainCtrl($scope, connect, navigation, $rootScope, $sce) {
     $scope.addAfter = function(train){
         insert_index  = $scope.select_trains.indexOf(train)+1;
         is_replace  = false;
-        $.mobile.changePage("#select_muscle_page",{transition:"slide"});
+        $.mobile.changePage("#select_muscle_page",{transition:"slideup"});
     };
     $scope.replace = function(train){
         insert_index  = $scope.select_trains.indexOf(train)+1;
         is_replace  = true;
-        $.mobile.changePage("#select_muscle_page",{transition:"slide"});
+        $.mobile.changePage("#select_muscle_page",{transition:"slideup"});
     };
     $scope.select = function(train){
         $rootScope.select_train = train;
-        $.mobile.changePage("#exercise_page",{transition:"slide"});
+        $.mobile.changePage("#exercise_page",{transition:"slideup"});
     };
 
     function setBlock(){

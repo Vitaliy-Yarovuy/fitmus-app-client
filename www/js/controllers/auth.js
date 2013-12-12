@@ -31,7 +31,7 @@ function AuthCtrl($scope, connect) {
                 console.log(data);
                 setTimeout(function(){
                     location.hash = "#main_page";
-                    $.mobile.changePage("#main_page",{transition:"slide"});
+                    $.mobile.changePage("#main_page",{transition:"slideup"});
                 },0)
             });
         });
