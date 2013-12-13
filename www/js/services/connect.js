@@ -73,6 +73,8 @@ app.factory('connect',function ($rootScope){
 
 
     function connectExerciseToMuscle(data){
+        fUtils.getContentDirectory();
+
         angular.forEach(data.musclegroup_exercise,function(values, id_muscle_group){
             for(var i=0;i< values.length;i++){
                 var id_exercise = values[i];
