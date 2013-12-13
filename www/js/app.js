@@ -45,4 +45,9 @@
             $.mobile.changePage("#auth_page");
         }
     });
+    global.onerror = function(){
+        var arr = JSON.parse(localStorage["error-log"]||"[]");
+        arr.push([].slice.call(arguments));
+        localStorage["error-log"] = JSON.stringify(arr);
+    }
 })(window);
