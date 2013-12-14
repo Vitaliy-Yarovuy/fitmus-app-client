@@ -1,5 +1,15 @@
 (function(global,undefined){
-
+    function censor(censor) {
+        var i = 0;
+        return function(key, value) {
+            if(i !== 0 && typeof(censor) === 'object' && typeof(value) == 'object' && censor == value)
+                return '[Circular]';
+            if(i >= 29) // seems to be a harded maximum of 30 serialized objects?
+                return '[Unknown]';
+            ++i; // so we know we aren't using the original object anymore
+            return value;
+        }
+    }
 //    jQuery(document).on('click','a[href*="#"]', function(e) {
 //        location.hash = this.href.split("#")[1];
 //        return false;
@@ -48,6 +58,6 @@
     global.onerror = function(){
         var arr = JSON.parse(localStorage["error-log"]||"[]");
         arr.push([].slice.call(arguments));
-        localStorage["error-log"] = JSON.stringify(arr);
+        localStorage["error-log"] = JSON.stringify(arr,censor(arr));
     }
 })(window);
