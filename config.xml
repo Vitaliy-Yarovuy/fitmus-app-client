@@ -16,6 +16,8 @@
         Vitaliy Yarovuy
     </author>
 
+
+    <feature name="http://api.phonegap.com/1.0/device" />
     <!--
         If you do not want any permissions to be added to your app, add the
         following tag to your config.xml; you will still have the INTERNET
@@ -40,29 +42,23 @@
     <!-- Plugins -->
 
     <!-- Core plugins -->
-    <gap:plugin name="org.apache.cordova.battery-status" />
-    <gap:plugin name="org.apache.cordova.camera" />
-    <gap:plugin name="org.apache.cordova.media-capture" />
-    <gap:plugin name="org.apache.cordova.console" />
-    <gap:plugin name="org.apache.cordova.contacts" />
-    <gap:plugin name="org.apache.cordova.device" />
-    <gap:plugin name="org.apache.cordova.device-motion" />
-    <gap:plugin name="org.apache.cordova.device-orientation" />
-    <gap:plugin name="org.apache.cordova.dialogs" />
-    <gap:plugin name="org.apache.cordova.file" />
-    <gap:plugin name="org.apache.cordova.file-transfer" />
-    <gap:plugin name="org.apache.cordova.geolocation" />
-    <gap:plugin name="org.apache.cordova.globalization" />
-    <!--<gap:plugin name="org.apache.cordova.inappbrowser" />-->
-    <gap:plugin name="org.apache.cordova.media" />
-    <!--<gap:plugin name="org.apache.cordova.network-information" />-->
-    <gap:plugin name="org.apache.cordova.splashscreen" />
-    <gap:plugin name="org.apache.cordova.vibration" />
+
 
 
     <plugin name="InAppBrowser" value="CDVInAppBrowser" />
     <plugin name="InAppBrowser" value="org.apache.cordova.InAppBrowser" />
 
+    <plugin name="File" value="CDVFile" />
+    <plugin name="File" value="org.apache.cordova.FileUtils" />
+
+    <plugin name="FileTransfer" value="CDVFileTransfer" />
+    <plugin name="FileTransfer" value="org.apache.cordova.FileTransfer" />
+
+
+    <feature name="http://api.phonegap.com/1.0/media"/>
+    <feature name="http://api.phonegap.com/1.0/file"/>
+
+    <!--
     <feature name="InAppBrowser">
         <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser" />
         <param name="ios-package" value="CDVInAppBrowser" />
@@ -77,7 +73,7 @@
         <param name="android-package" value="org.apache.cordova.filetransfer.FileTransfer" />
         <param name="ios-package" value="CDVFileTransfer" />
     </feature>
-
+    -->
     <!-- Third party plugins -->
     <!-- A list of available plugins are available at https://build.phonegap.com/plugins -->
     <!-- 
