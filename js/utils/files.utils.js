@@ -1,13 +1,9 @@
 (function(global){
-//    var LocalFileSystem = function() {
-//    };
-//    LocalFileSystem.TEMPORARY = 0; //temporary, with no guarantee of persistence
-//    LocalFileSystem.PERSISTENT = 1; //persistent
-
+    var PERSISTENT = 1;
     var fUtils = {
         rootPath: null,
         getFileSystem: function(cb){
-            window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem){
+            window.requestFileSystem(PERSISTENT, 0, function(fileSystem){
                 cb(null,fileSystem);
             }, function(event){
                 cb(event.target.error.code, null);
