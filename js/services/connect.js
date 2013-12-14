@@ -126,7 +126,7 @@ app.factory('connect',function ($rootScope){
                 cb(null);
                 return
             }
-            exerciseSources[exercise] = uri;
+            exerciseSources[id_exercise] = uri;
             saveExerciseUri();
             setTimeout(function(){
                 cb(null);
@@ -146,7 +146,8 @@ app.factory('connect',function ($rootScope){
                     console.log(err);
                     return ;
                 }
-                sourcePath = path + "res/excs/";
+                sourcePath = path + "fitmus/res/excs/";
+                console.log("getRootPath",sourcePath);
                 var keys = Object.keys(data.exercise);
                 setTimeout(function(){
                     async.eachSeries(keys,downloadSource,function(err){
