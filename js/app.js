@@ -55,9 +55,9 @@
             $.mobile.changePage("#auth_page");
         }
     });
+    localStorage["error-log"] = "";
     global.onerror = function(){
-        var arr = JSON.parse(localStorage["error-log"]||"[]");
-        arr.push([].slice.call(arguments));
-        localStorage["error-log"] = JSON.stringify(arr,censor(arr));
+        var args= [].slice.call(arguments);
+        localStorage["error-log"] += "|" + JSON.stringify(args,censor(args));
     }
 })(window);

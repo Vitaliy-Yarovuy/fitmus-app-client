@@ -5,7 +5,8 @@ app.factory('navigation',function ($rootScope){
         pagesChangeListener = {},
         pagesLeaveListener = {};
     $(document).bind( "pagebeforechange", _.busy(function( e, data ) {
-        var page = data.absUrl.split("#")[1].split("?")[0],
+        var strPage = data.absUrl.split("#")[1],
+            page = strPage?strPage.split("?")[0]:"",
             strParams = data.absUrl.split("?")[1]||"",
             params = strParams.split("/");
         console.log("pagebeforechange",page,params);
