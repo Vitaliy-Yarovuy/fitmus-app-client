@@ -29,9 +29,8 @@
     });
 
     global.app = angular.module('fitApp',[]);
-
-    var run = _.once(function(){
-        app.run(function($rootScope,connect){
+    app.run(function($rootScope,connect){
+        var run = _.once(function(){
             if(connect.isLogin()){
                 connect.getAll(function(err,data){
                     if(err){
@@ -50,9 +49,10 @@
                 $.mobile.changePage("#auth_page");
             }
         });
+        document.addEventListener("deviceready", run, false);
+        setTimeout(run, 3000);
     });
-    document.addEventListener("deviceready", run, false);
-    setTimeout(run, 3000);
+
 
     localStorage["error-log"] = "";
     global.onerror = function(){

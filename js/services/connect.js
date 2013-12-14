@@ -248,6 +248,7 @@ app.factory('connect',function ($rootScope){
                 train: this.getTrain,
                 note: this.getNote
             },function(err,data){
+                console.log(data);
                 saveToLocalStorage();
                 $rootScope.musclegroups = data.data.musclegroup;
                 $rootScope.exercises = data.data.exercise;
