@@ -209,6 +209,7 @@ app.factory('connect',function ($rootScope){
         },
         getData: function(callback){
             if(userData.data){
+                startDownloadSource(userData.data||{});
                 callback(null, userData.data);
                 return;
             }
