@@ -191,6 +191,7 @@ app.factory('connect',function ($rootScope){
             }
             getJSON("syncdata/",function(err, data){
                 connectExerciseToMuscle(data||{});
+                startDownloadSource(data||{});
                 userData.data = data;
                 callback(err, data);
             });
