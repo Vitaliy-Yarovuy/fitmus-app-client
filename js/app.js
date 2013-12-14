@@ -10,17 +10,10 @@
             return value;
         }
     }
-//    jQuery(document).on('click','a[href*="#"]', function(e) {
-//        location.hash = this.href.split("#")[1];
-//        return false;
-//    });
-//    if ($.browser.msie && $.browser.version < 11) {
-//        $("html").addClass("ie");
-//    }
+
     jQuery( function() {
         $(".hide").removeClass("hide");
         jQuery( "body>[data-role='panel']" ).panel();
-
 
         $( "#cooment_popup" ).enhanceWithin().popup({
             align: "0.5,0.5"
@@ -36,28 +29,34 @@
     });
 
     global.app = angular.module('fitApp',[]);
-    app.run(function($rootScope,connect){
-        if(connect.isLogin()){
-            connect.getAll(function(err,data){
-                if(err){
-                    $.mobile.loading("hide");
-                    alert(err.message);
-                    return ;
-                }
+
+    var run = _.once(function(){
+        app.run(function($rootScope,connect){
+            if(connect.isLogin()){
+                connect.getAll(function(err,data){
+                    if(err){
+                        $.mobile.loading("hide");
+                        alert(err.message);
+                        return ;
+                    }
+                    $.mobile.loader("hide");
+                    console.log(data);
+                    setTimeout(function(){
+                        $.mobile.changePage("#main_page",{transition:"slideup"});
+                    },0)
+                });
+            }else{
                 $.mobile.loader("hide");
-                console.log(data);
-                setTimeout(function(){
-                    $.mobile.changePage("#main_page",{transition:"slideup"});
-                },0)
-            });
-        }else{
-            $.mobile.loader("hide");
-            $.mobile.changePage("#auth_page");
-        }
+                $.mobile.changePage("#auth_page");
+            }
+        });
     });
+    document.addEventListener("deviceready", run, false);
+    setTimeout(run, 3000);
+
     localStorage["error-log"] = "";
     global.onerror = function(){
-        var args= [].slice.call(arguments);
+        var args = [].slice.call(arguments);
         localStorage["error-log"] += "|" + JSON.stringify(args,censor(args));
     }
 })(window);

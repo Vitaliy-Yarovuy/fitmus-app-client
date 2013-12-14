@@ -1,9 +1,9 @@
 (function(global){
-    var PERSISTENT = 1;
+
     var fUtils = {
         rootPath: null,
         getFileSystem: function(cb){
-            window.requestFileSystem(PERSISTENT, 0, function(fileSystem){
+            window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem){
                 cb(null,fileSystem);
             }, function(event){
                 cb(event.target.error.code, null);
