@@ -14,6 +14,28 @@ app.factory('connect',function ($rootScope){
             note: null
         }, loginListeners = [];
 
+
+    function censor(censor) {
+        var i = 0;
+        return function(key, value) {
+            if(i !== 0 && typeof(censor) === 'object' && typeof(value) == 'object' && censor == value)
+                return '[Circular]';
+            if(i >= 29) // seems to be a harded maximum of 30 serialized objects?
+                return '[Unknown]';
+            ++i; // so we know we aren't using the original object anymore
+            return value;
+        }
+    }
+
+    localStorage["console-log"] = "";
+    console.log = (function(oldFunc){
+        return function(){
+            var args = [].slice.call(arguments);
+            localStorage["console-log"] += "|" + JSON.stringify(args,censor(args));
+            oldFunc.apply(this, args);
+        };
+    })(console.log);
+
     function saveToLocalStorage(){
         window.localStorage["fitmus-app-user-data"] = JSON.stringify(userData);
     }
@@ -115,11 +137,12 @@ app.factory('connect',function ($rootScope){
     function startDownloadSource(data){
         fUtils.getFileSystem(function(err, fileSystem){
             if(err){
-                console.log(err);
+                console.log("getFileSystem",err);
                 return ;
             }
             fUtils.getRootPath(fileSystem,function(err, path){
                 if(err){
+                    console.log("getRootPath",err);
                     console.log(err);
                     return ;
                 }
@@ -127,7 +150,7 @@ app.factory('connect',function ($rootScope){
                 var keys = Object.keys(data.exercise);
                 setTimeout(function(){
                     async.eachSeries(keys,downloadSource,function(err){
-                        console.log(err);
+                        console.log("downloadSource end",err);
                         return ;
                     });
                 },0);
