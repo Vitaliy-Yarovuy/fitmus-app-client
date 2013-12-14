@@ -117,21 +117,30 @@ app.factory('connect',function ($rootScope){
 
     function downloadSource(id_exercise, cb){
         var exercise = userData.data.exercise[id_exercise];
-        if(!exercise || exerciseSources[exercise]){
+        var run = function(){
+            fUtils.downloadFile(exercise.img, sourcePath + id_exercise + ".jpg", function(err, uri){
+                if(err){
+                    cb(null);
+                    return
+                }
+                exerciseSources[id_exercise] = uri;
+                saveExerciseUri();
+                setTimeout(function(){
+                    cb(null);
+                },300);
+            });
+        };
+        if(!exercise ){
             cb(null);
-            return
+            return;
         }
-        fUtils.downloadFile(exercise.img, sourcePath + id_exercise + ".jpg", function(err, uri){
-            if(err){
-                cb(null);
-                return
-            }
-            exerciseSources[id_exercise] = uri;
-            saveExerciseUri();
-            setTimeout(function(){
-                cb(null);
-            },300);
-        });
+        if(exerciseSources[exercise]){
+            var img = document.createElement("img");
+            img.onerror = run;
+            img.onload = function(){cb(null)};
+            return;
+        }
+        run();
     }
 
     function startDownloadSource(data){
