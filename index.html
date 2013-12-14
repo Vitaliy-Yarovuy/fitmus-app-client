@@ -45,7 +45,7 @@
       </div>
       <div data-role="content">
         <ul data-role="listview" ng-class="edit_mode?'with-control':''">
-          <li ng-repeat="train in select_trains "><img src="{{exercises[train.id_exercise].img}}" class="exercise-img">
+          <li ng-repeat="train in select_trains "><img ng-exercise-img="exercises[train.id_exercise]" class="exercise-img">
             <div ng-chose-mode="train" class="li-content"><a href="#" ng-click="select(train)">
                 <h3 ng-color-mode>{{exercises[train.id_exercise].name}}</h3></a>
               <p>{{musclegroups[train.id_muscle_group]}}</p><a href="#" ng-next-mode class="ui-btn ui-btn-no-border ui-btn-bottom-right"><i class="fit-icon-mid fit-icon-charge"></i></a>
@@ -79,7 +79,7 @@
       </div>
       <div data-role="content">
         <ul data-role="listview">
-          <li><img src="{{exercises[select_train.id_exercise].img}}" class="exercise-img">
+          <li><img ng-exercise-img="exercises[select_train.id_exercise]" class="exercise-img">
             <div ng-chose-mode="select_train" class="li-content">
               <h3 ng-color-mode>{{exercises[select_train.id_exercise].name}}</h3>
               <p>{{musclegroups[select_train.id_muscle_group]}}</p><a href="#" ng-next-mode class="ui-btn ui-btn-no-border ui-btn-bottom-right"><i class="fit-icon-mid fit-icon-charge"></i></a>
@@ -185,7 +185,7 @@
       </div>
       <div data-role="content">
         <ul data-role="listview">
-          <li ng-repeat="(id, exercise) in exercises | inRangeInt: musclegroup_exercises[muscle_id] "><img src="{{exercise.img}}" class="exercise-img">
+          <li ng-repeat="(id, exercise) in exercises | inRangeInt: musclegroup_exercises[muscle_id] "><img ng-exercise-img="exercise" class="exercise-img">
             <div class="li-content">
               <h3 class="blue">{{exercise.name}}</h3>
               <p>{{musclegroups[muscle_id]}}</p>
@@ -279,6 +279,7 @@
     <script src="./js/directives/choseUnit.js"></script>
     <script src="./js/directives/approach.js"></script>
     <script src="./js/directives/externalLink.js"></script>
+    <script src="./js/directives/exerciseImg.js"></script>
     <script src="./js/services/connect.js"></script>
     <script src="./js/services/navigation.js"></script>
     <script src="./js/filters/inRangeInt.js"></script>

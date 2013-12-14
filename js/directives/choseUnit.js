@@ -42,7 +42,7 @@ app.directive('ngChoseUnit', function($compile, $rootScope) {
                 }
             });
             $element.on("click",function(){
-                var id = getData(scope, attrs.ngChoseUnit).toString(),
+                var id = scope.$eval( attrs.ngChoseUnit).toString(),
                     index = keys.indexOf(id) + 1;
                 setData(scope, attrs.ngChoseUnit,keys[index%keys.length]);
             });

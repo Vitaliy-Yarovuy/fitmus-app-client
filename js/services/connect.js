@@ -5,6 +5,8 @@ app.factory('connect',function ($rootScope){
         app_id = "1",
         app_key = "1",
         app_sign = "1",//md5(app_id + app_key);
+        sourcePath,
+        exerciseSources = {},
         userData = {
             user: null,
             data: null,
@@ -19,6 +21,16 @@ app.factory('connect',function ($rootScope){
     function loadFromLocalStorage(){
         if(window.localStorage["fitmus-app-user-data"]){
             userData = JSON.parse(window.localStorage["fitmus-app-user-data"]);
+        }
+    }
+
+    function saveExerciseUri(){
+        window.localStorage["fitmus-app-exercises"] = JSON.stringify(exerciseSources);
+    }
+
+    function loadExerciseUri(){
+        if(window.localStorage["fitmus-app-exercises"]){
+            exerciseSources = JSON.parse(window.localStorage["fitmus-app-exercises"]);
         }
     }
 
@@ -73,13 +85,53 @@ app.factory('connect',function ($rootScope){
 
 
     function connectExerciseToMuscle(data){
-        fUtils.getContentDirectory();
-
         angular.forEach(data.musclegroup_exercise,function(values, id_muscle_group){
             for(var i=0;i< values.length;i++){
                 var id_exercise = values[i];
                 data.exercise[id_exercise].id_muscle_group = id_muscle_group;
             }
+        });
+    }
+
+    function downloadSource(id_exercise, cb){
+        var exercise = userData.data.exercise[id_exercise];
+        if(!exercise || exerciseSources[exercise]){
+            cb(null);
+            return
+        }
+        fUtils.downloadFile(exercise.img, sourcePath + id_exercise + ".jpg", function(err, uri){
+            if(err){
+                cb(null);
+                return
+            }
+            exerciseSources[exercise] = uri;
+            saveExerciseUri();
+            setTimeout(function(){
+                cb(null);
+            },300);
+        });
+    }
+
+    function startDownloadSource(data){
+        fUtils.getFileSystem(function(err, fileSystem){
+            if(err){
+                console.log(err);
+                return ;
+            }
+            fUtils.getRootPath(fileSystem,function(err, path){
+                if(err){
+                    console.log(err);
+                    return ;
+                }
+                sourcePath = path + "res/excs/";
+                var keys = Object.keys(data.exercise);
+                setTimeout(function(){
+                    async.eachSeries(keys,downloadSource,function(err){
+                        console.log(err);
+                        return ;
+                    });
+                },0);
+            })
         });
     }
 
@@ -91,8 +143,12 @@ app.factory('connect',function ($rootScope){
     }
 
     return {
+        getLocalExerciseUri: function(){
+           return exerciseSources;
+        },
         isLogin: function(){
             loadFromLocalStorage();
+            loadExerciseUri();
             return !!userData.user;
         },
         onLogin:function(callback){

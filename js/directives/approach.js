@@ -8,15 +8,6 @@ app.directive('ngApproach', function($compile, $rootScope, $timeout) {
       w: "weight"
    };
 
-    function getData(scope,path){
-        var pathEls = path.split("."),
-            element = scope;
-        while(pathEls.length && element){
-            element = element[pathEls.shift()];
-        }
-        return element;
-    }
-
     function setData(scope,path,value){
         var key,
             pathEls = path.split("."),
@@ -40,7 +31,7 @@ app.directive('ngApproach', function($compile, $rootScope, $timeout) {
     return {
         scope: 'false',
         link: function(scope, $element, attrs) {
-            var data = getData(scope, attrs.ngApproach),
+            var data = scope.$eval( attrs.ngApproach),
                 exercise = $rootScope.exercises[$rootScope.select_train.id_exercise],
                 types = exercise.type.split(""),
                 units = [1,1],
@@ -62,7 +53,7 @@ app.directive('ngApproach', function($compile, $rootScope, $timeout) {
             $results.forEach(function($result, index){
                 var type = types[index],
                     key = attrs.ngApproach + "." + type,
-                    value = getData(scope, key),
+                    value = scope.$eval(key),
                     unit = $rootScope.units[unit_names[type]],
                     coeff = unit[units[index]].coeff,
                     $btn = $result.next(),
@@ -86,7 +77,7 @@ app.directive('ngApproach', function($compile, $rootScope, $timeout) {
                         unit_index = unit_ids.indexOf(id) + 1;
                     units[index] = unit_ids[unit_index%unit_ids.length];
                     coeff = unit[units[index]].coeff;
-                    value = getData(scope, key);
+                    value = scope.$eval(key);
                     $result.val(Math.floor(value*coeff*100)/100);
                     $btn.css("background",unit[units[index]].color);
                     $btn.html(unit[units[index]].sym);
@@ -98,7 +89,7 @@ app.directive('ngApproach', function($compile, $rootScope, $timeout) {
                 var type = index?"w":"r",
                     $btn = $iTimer.next(),
                     key = attrs.ngApproach + ".t" + type,
-                    value = getData(scope, key)|| 0,
+                    value = scope.$eval(key)|| 0,
                     timeId,
                     stopTimer = function(){
                         $timeout.cancel(timeId);
@@ -106,7 +97,7 @@ app.directive('ngApproach', function($compile, $rootScope, $timeout) {
                     },
                     tickTimer = function(){
                         timeId = $timeout(function(){
-                            value = getData(scope, key)||0;
+                            value = scope.$eval(key)||0;
                             if(value < 59 * 60 + 59 ){
                                 setData(scope, key, value + 1);
                                 tickTimer();
@@ -121,7 +112,7 @@ app.directive('ngApproach', function($compile, $rootScope, $timeout) {
                     $iTimer.val(toTime(newValue||0));
                 });
                 $btn.on("click",function(){
-                    value = getData(scope, key)||0;
+                    value = scope.$eval(key)||0;
                     if(timeId){
                         stopTimer();
                     }
@@ -131,7 +122,7 @@ app.directive('ngApproach', function($compile, $rootScope, $timeout) {
                     }
                 });
                 $iTimer.on("click",function(){
-                    value = getData(scope, key)||0;
+                    value = scope.$eval(key)||0;
                     if(timeId){
                         stopTimer();
                     }
