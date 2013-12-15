@@ -86,7 +86,7 @@
             </div>
           </li>
           <li ng-repeat="(index,approach) in select_train.result| orderIntKey:-1">
-            <div ng-approach="approach" ng-approach-old="">
+            <div ng-approach="approach" ng-approach-old="select_train_old.result[index]">
               <table>
                 <tr>
                   <td>{{index+1}}</td>
@@ -120,13 +120,13 @@
               <dl class="left">
                 <dt class="for-no-time-inline"><a href="#" ng-click="remove(index+1)" class="ui-btn ui-btn-no-border ui-btn-short"><i class="fit-icon-mid fit-icon-remove"></i></a></dt>
                 <dd>БЫЛО:</dd>
-                <dt>95 x 8</dt>
+                <dt><span ng-approach-old-result-1>95</span>x<span ng-approach-old-result-2>8</span></dt>
               </dl>
               <dl class="right for-time">
                 <dd>Отдых:</dd>
-                <dt class="lime">01:30</dt>
+                <dt ng-approach-old-rest class="lime">01:30</dt>
                 <dd>Работа:</dd>
-                <dt class="purple">00:12</dt>
+                <dt ng-approach-old-work class="purple">00:12</dt>
               </dl>
               <div class="clearfix"></div>
             </div>

@@ -6,7 +6,8 @@ function MainCtrl($scope, connect, navigation, $rootScope, $sce) {
     var now = new Date(),
         block = false,
         insert_index = 0,
-        is_replace = false;
+        is_replace = false,
+        timestamps = [];
 
     $scope.edit_mode = false;
 
@@ -16,8 +17,8 @@ function MainCtrl($scope, connect, navigation, $rootScope, $sce) {
                 alert(err.message);
                 return ;
             }
-
             $rootScope.trains = data;
+            timestamps = Object.keys($rootScope.trains).sort();
             selectExercise($rootScope.select_timestamp);
             if(id_add_exercise){
                 addExercise(id_add_exercise);
@@ -30,10 +31,8 @@ function MainCtrl($scope, connect, navigation, $rootScope, $sce) {
 
     $rootScope.$watch('select_timestamp', selectExercise);
     $rootScope.$watch('select_date', function(newDate){
-        //console.log('select_date',newDate);
-        var aDate = newDate.split("-");
-        $rootScope.select_timestamp = getMoscovTimeStamp(aDate[0],aDate[1]-1,aDate[2]-1)
-        console.log("$rootScope.select_timestamp",$rootScope.select_timestamp);
+        $rootScope.select_timestamp = convertDayToTimestamp(newDate);
+        //console.log("$rootScope.select_timestamp",$rootScope.select_timestamp);
     });
     $rootScope.$watch('trains', _.debounce(function(newTrains, oldTrains){
         if(!block && oldTrains){
@@ -47,10 +46,10 @@ function MainCtrl($scope, connect, navigation, $rootScope, $sce) {
     //timestamp on Moscov time +4h
     $rootScope.select_date = XDate(now).toString("yyyy-MM-dd");
     $rootScope.nextDay = function(){
-        $rootScope.select_date = XDate($rootScope.select_date).addDays(1).toString("yyyy-MM-dd");
+        $rootScope.select_date = addToDate($rootScope.select_date,1);
     };
     $rootScope.prevDay = function(){
-        $rootScope.select_date = XDate($rootScope.select_date).addDays(-1).toString("yyyy-MM-dd");
+        $rootScope.select_date = addToDate($rootScope.select_date,-1);
     };
     $scope.toggleState = function(){
         $scope.edit_mode = !$scope.edit_mode;
@@ -93,17 +92,39 @@ function MainCtrl($scope, connect, navigation, $rootScope, $sce) {
     };
     $scope.select = function(train){
         $rootScope.select_train = train;
-        $rootScope.select_train_old = train;
+        $rootScope.select_train_old = findOldTrain(train);
         $.mobile.changePage("#exercise_page",{transition:"slideup"});
     };
 
-    function findOldTrain(train){
-
+    function findOldTrain(selectTrain){
+        var timestamp = $rootScope.select_timestamp,
+            availableTimestamp = timestamps.filter(function(time){
+                return time < timestamp;
+            }),
+            oldTrain = null;
+        _.find(availableTimestamp,function(time){
+            var trains = $rootScope.trains[time],
+                train = _.some(trains,function(){
+                    return train.status != "Deleted" && train.id_exercise == selectTrain.id_exercise;
+                });
+            oldTrain = train;
+            return !!train;
+        });
+        return oldTrain
     }
 
     function setBlock(){
         block = true;
         setTimeout(function(){ block = false; },200);
+    }
+
+    function convertDayToTimestamp(date){
+        var aDate = date.split("-");
+        return getMoscovTimeStamp(aDate[0],aDate[1]-1,aDate[2]-1);
+    }
+
+    function addToDate(dayStr,dayNum){
+        return XDate(dayStr).addDays(dayNum).toString("yyyy-MM-dd");
     }
 
     function normalisePosition(trains){

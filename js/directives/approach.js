@@ -32,10 +32,13 @@ app.directive('ngApproach', function($compile, $rootScope, $timeout) {
         scope: 'false',
         link: function(scope, $element, attrs) {
             var data = scope.$eval( attrs.ngApproach),
+                oldApproach = scope.$eval( attrs.ngApproachOld),
                 exercise = $rootScope.exercises[$rootScope.select_train.id_exercise],
                 types = exercise.type.split(""),
                 units = [1,1],
+                $resultsOld = [$element.find("[ng-approach-old-result-1]"),$element.find("[ng-approach-old-result-2]")],
                 $results = [$element.find("[ng-approach-result-1]"), $element.find("[ng-approach-result-2]")],
+                $iTimersOld = [$element.find("[ng-approach-old-rest]"), $element.find("[ng-approach-old-work]")],
                 $iTimers = [$element.find("[ng-approach-rest]"), $element.find("[ng-approach-work]")];
 
             if(types[0] == "w"){
@@ -82,7 +85,6 @@ app.directive('ngApproach', function($compile, $rootScope, $timeout) {
                     $btn.css("background",unit[units[index]].color);
                     $btn.html(unit[units[index]].sym);
                 });
-
             });
 
             $iTimers.forEach(function($iTimer, index){
@@ -134,6 +136,35 @@ app.directive('ngApproach', function($compile, $rootScope, $timeout) {
                     }
                 });
             });
+
+            $iTimersOld.forEach(function($iTimer, index){
+                var type = index?"w":"r",
+                    key = attrs.ngApproachOld + ".t" + type,
+                    value = scope.$eval(key)|| 0;
+                $iTimer.val(toTime(value));
+                scope.$watch(key,function(newValue){
+                    $iTimer.val(toTime(newValue||0));
+                });
+            });
+
+
+
+            $resultsOld.forEach(function($result, index){
+                var type = types[index],
+                    key = attrs.ngApproachOld + "." + type,
+                    value = scope.$eval(key) || 0,
+                    unit = $rootScope.units[unit_names[type]],
+                    coeff = unit[units[index]].coeff,
+                    unit_ids = Object.keys(unit);
+
+                $result.html(Math.floor(value*coeff*100)/100);
+                scope.$watch(key,function(newValue){
+                    newValue = newValue || 0;
+                    coeff = unit[units[index]].coeff;
+                    $result.html(Math.floor(newValue*coeff*100)/100);
+                });
+            });
+
         }
     };
 });
