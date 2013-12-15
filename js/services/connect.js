@@ -124,9 +124,9 @@ app.factory('connect',function ($rootScope){
                     cb(null);
                     return
                 }
-                exerciseSources[id_exercise] = uri;
-                saveExerciseUri();
                 setTimeout(function(){
+                    exerciseSources[id_exercise] = uri;
+                    saveExerciseUri();
                     cb(null);
                 },300);
             });
