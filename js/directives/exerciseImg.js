@@ -12,7 +12,8 @@ app.directive('ngExerciseImg', function($compile, $rootScope, connect) {
             $src.html(src);
             scope.$watch(attrs.ngExerciseImg, function(exercise){
                 exercise = exercise || fakeExercise;
-                var src = exercisesUri[exercise.id] || exercise.img;
+                var exercisesUri = connect.getLocalExerciseUri(),
+                    src = exercisesUri[exercise.id] || exercise.img;
                 $element.attr("src",src);
                 $src.html(src);
             })
