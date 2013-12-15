@@ -104,7 +104,7 @@ function MainCtrl($scope, connect, navigation, $rootScope, $sce) {
             oldTrain = null;
         _.find(availableTimestamp,function(time){
             var trains = $rootScope.trains[time],
-                train = _.some(trains,function(){
+                train = _.some(trains,function(train){
                     return train.status != "Deleted" && train.id_exercise == selectTrain.id_exercise;
                 });
             oldTrain = train;

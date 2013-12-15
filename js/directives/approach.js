@@ -148,7 +148,6 @@ app.directive('ngApproach', function($compile, $rootScope, $timeout) {
             });
 
 
-
             $resultsOld.forEach(function($result, index){
                 var type = types[index],
                     key = attrs.ngApproachOld + "." + type,
