@@ -141,9 +141,9 @@ app.directive('ngApproach', function($compile, $rootScope, $timeout) {
                 var type = index?"w":"r",
                     key = attrs.ngApproachOld + ".t" + type,
                     value = scope.$eval(key)|| 0;
-                $iTimer.val(toTime(value));
+                $iTimer.html(toTime(value));
                 scope.$watch(key,function(newValue){
-                    $iTimer.val(toTime(newValue||0));
+                    $iTimer.html(toTime(newValue||0));
                 });
             });
 
