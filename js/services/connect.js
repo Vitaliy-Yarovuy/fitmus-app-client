@@ -220,7 +220,7 @@ app.factory('connect',function ($rootScope){
             callback && callback();
         },
         getData: function(callback){
-            if(userData.data){
+            if(userData.data && !navigator.onLine){
                 startDownloadSource(userData.data||{});
                 callback(null, userData.data);
                 return;
@@ -233,7 +233,7 @@ app.factory('connect',function ($rootScope){
             });
         },
         getTrain: function(callback){
-            if(userData.train){
+            if(userData.train && !navigator.onLine){
                 callback(null, userData.train);
                 return;
             }
@@ -244,7 +244,7 @@ app.factory('connect',function ($rootScope){
             });
         },
         getNote: function(callback){
-            if(userData.note){
+            if(userData.note && !navigator.onLine){
                 callback(null, userData.note);
                 return;
             }
