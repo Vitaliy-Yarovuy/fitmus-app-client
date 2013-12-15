@@ -86,7 +86,7 @@
             </div>
           </li>
           <li ng-repeat="(index,approach) in select_train.result| orderIntKey:-1">
-            <div ng-approach="approach" ng-approach-old="select_train_old.result[index]">
+            <div ng-approach="approach" ng-approach-old="select_train_old.result[index+1]">
               <table>
                 <tr>
                   <td>{{index+1}}</td>

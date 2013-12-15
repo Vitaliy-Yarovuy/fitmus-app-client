@@ -113,11 +113,11 @@ function MainCtrl($scope, connect, navigation, $rootScope, $sce) {
         var timestamp = $rootScope.select_timestamp,
             availableTimestamp = timestamps.filter(function(time){
                 return time < timestamp;
-            }),
+            }).reverse(),
             oldTrain = null;
         _.find(availableTimestamp,function(time){
             var trains = $rootScope.trains[time],
-                train = _.some(trains,function(train){
+                train = _.find(trains,function(train){
                     return train.status != "Deleted" && train.id_exercise == selectTrain.id_exercise;
                 });
             oldTrain = train;
