@@ -2,6 +2,7 @@
 
 app.factory('connect',function ($rootScope){
     var rootUrl = "http://dev.fitmus.com/api/v3/",
+        rand = Math.random(),
         app_id = "1",
         app_key = "1",
         app_sign = "1",//md5(app_id + app_key);
@@ -118,7 +119,7 @@ app.factory('connect',function ($rootScope){
     function downloadSource(id_exercise, cb){
         var exercise = userData.data.exercise[id_exercise];
         var run = function(){
-            fUtils.downloadFile(exercise.img, sourcePath + id_exercise + ".jpg", function(err, uri){
+            fUtils.downloadFile(exercise.img + "?"+rand, sourcePath + id_exercise + ".jpg", function(err, uri){
                 if(err){
                     cb(null);
                     return
@@ -138,6 +139,7 @@ app.factory('connect',function ($rootScope){
             var img = document.createElement("img");
             img.onerror = run;
             img.onload = function(){cb(null)};
+            img.src = exerciseSources[exercise];
             return;
         }
         run();

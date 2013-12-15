@@ -93,8 +93,13 @@ function MainCtrl($scope, connect, navigation, $rootScope, $sce) {
     };
     $scope.select = function(train){
         $rootScope.select_train = train;
+        $rootScope.select_train_old = train;
         $.mobile.changePage("#exercise_page",{transition:"slideup"});
     };
+
+    function findOldTrain(train){
+
+    }
 
     function setBlock(){
         block = true;
