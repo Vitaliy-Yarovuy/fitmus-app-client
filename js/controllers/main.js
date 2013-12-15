@@ -4,6 +4,7 @@
 
 function MainCtrl($scope, connect, navigation, $rootScope, $sce) {
     var now = new Date(),
+        isLoadData = false,
         block = false,
         insert_index = 0,
         is_replace = false,
@@ -12,23 +13,35 @@ function MainCtrl($scope, connect, navigation, $rootScope, $sce) {
     $scope.edit_mode = false;
 
     navigation.beforePageChange("main_page",function(id_add_exercise){
-        connect.getTrain(function(err,data){
-            if(err){
-                alert(err.message);
-                return ;
-            }
-            $rootScope.trains = data;
-            timestamps = Object.keys($rootScope.trains).sort();
-            selectExercise($rootScope.select_timestamp);
+        var run = function(){
             if(id_add_exercise){
                 addExercise(id_add_exercise);
             }else{
                 setBlock();
             }
             $scope.$apply();
-        });
+        };
+        if(isLoadData){
+            run();
+        }else{
+            connect.getTrain(function(err,data){
+                if(err){
+                    alert(err.message);
+                    return ;
+                }
+                isLoadData = true;
+                $rootScope.trains = data;
+                selectExercise($rootScope.select_timestamp);
+                run();
+            });
+        }
     });
 
+    $rootScope.$watch('trains',_.debounce(function(trains){
+        if(trains){
+            timestamps = Object.keys(trains).sort();
+        }
+    },800),true);
     $rootScope.$watch('select_timestamp', selectExercise);
     $rootScope.$watch('select_date', function(newDate){
         $rootScope.select_timestamp = convertDayToTimestamp(newDate);

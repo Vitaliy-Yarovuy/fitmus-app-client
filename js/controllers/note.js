@@ -3,19 +3,24 @@
 /* Controllers */
 
 function NoteCtrl($scope, connect, navigation, $rootScope, $sce) {
-    var block;
+    var block,
+        isLoadData = false;
     $scope.select_note = {};
+
     navigation.beforePageChange("note_page",function(){
-        connect.getNote(function(err,data){
-            if(err){
-                alert(err.message);
-                return ;
-            }
-            setBlock();
-            $scope.nodes = data;
-            selectTimestamp($rootScope.select_date);
-            $scope.$apply();
-        });
+        if(!isLoadData){
+            connect.getNote(function(err,data){
+                if(err){
+                    alert(err.message);
+                    return ;
+                }
+                isLoadData = true;
+                setBlock();
+                $scope.nodes = data;
+                selectTimestamp($rootScope.select_date);
+                $scope.$apply();
+            });
+        }
     });
 
     $rootScope.$watch('select_date',selectTimestamp);

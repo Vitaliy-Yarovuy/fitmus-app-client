@@ -1,8 +1,9 @@
-'use strict';
+    'use strict';
 
 /* Controllers */
 
 function SettingsCtrl($scope, connect, navigation, $rootScope) {
+    var isLoadData = false;
 
     $rootScope.settings = {
         is_show_time: true,
@@ -18,18 +19,17 @@ function SettingsCtrl($scope, connect, navigation, $rootScope) {
     };
 
     navigation.beforePageChange("settings_page",function(){
-
-        connect.getData(function(err,data){
-            if(err){
-                alert(err.message);
-                return ;
-            }
-            $scope.units = data.units;
-            $scope.$apply();
-
-        });
+        if(!isLoadData){
+            connect.getData(function(err,data){
+                if(err){
+                    alert(err.message);
+                    return ;
+                }
+                isLoadData = true;
+                $scope.units = data.units;
+                $scope.$apply();
+            });
+        }
     });
-
-
 
 }
