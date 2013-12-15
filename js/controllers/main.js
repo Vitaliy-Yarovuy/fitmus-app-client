@@ -110,7 +110,7 @@ function MainCtrl($scope, connect, navigation, $rootScope, $sce) {
             oldTrain = train;
             return !!train;
         });
-        return oldTrain
+        return oldTrain;
     }
 
     function setBlock(){

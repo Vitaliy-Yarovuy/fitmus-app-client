@@ -27,7 +27,7 @@
             var fileTransfer = new FileTransfer();
             fileTransfer.download(url, dest,
                 function(theFile) {
-                    cb(null, theFile.toURI());
+                    cb(null, theFile.toURL());
                 },
                 function(error) {
                     console.log("upload error code: " + error.code);
