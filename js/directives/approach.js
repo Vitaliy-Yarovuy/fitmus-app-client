@@ -1,166 +1,194 @@
-app.directive('ngApproach', function($compile, $rootScope, $timeout) {
+app.directive('ngApproach', function ($compile, $rootScope, $timeout) {
 
-   var unit_names = {
-      c: "count",
-      d: "distance",
-      l: "length",
-      t: "time",
-      w: "weight"
-   };
+    var unit_names = {
+        c: "count",
+        d: "distance",
+        l: "length",
+        t: "time",
+        w: "weight"
+    };
 
-    function setData(scope,path,value){
+    $rootScope.defaultUnits = {
+        c: 1,
+        d: 1,
+        l: 1,
+        t: 1,
+        w: 1
+    };
+    $rootScope.$watch("settings",function(settings){
+        if(settings){
+            $rootScope.defaultUnits.w = settings.weight_unit;
+            $rootScope.defaultUnits.d = settings.distance_unit;
+        }
+    },true);
+
+    function setData(scope, path, value, isSilent) {
         var key,
             pathEls = path.split("."),
             element = scope;
-        while(pathEls.length > 1 && element){
+        while (pathEls.length > 1 && element) {
             element = element[pathEls.shift()];
         }
-        while(pathEls.length > 1 ){
+        while (pathEls.length > 1) {
             key = pathEls.shift();
             element[key] = {};
             element = element[key];
         }
         element[pathEls.shift()] = value;
-        scope.$apply();
+        isSilent || scope.$apply();
     }
 
-    function toTime(time){
-        return sprintf("%02d:%02d",Math.floor(time/60),time % 60);
+    function toTime(time) {
+        return sprintf("%02d:%02d", Math.floor(time / 60), time % 60);
     }
 
     return {
         scope: 'false',
-        link: function(scope, $element, attrs) {
-            var data = scope.$eval( attrs.ngApproach),
-                oldApproach = scope.$eval( attrs.ngApproachOld),
+        link: function (scope, $element, attrs) {
+            var data = scope.$eval(attrs.ngApproach),
+                oldApproach = scope.$eval(attrs.ngApproachOld),
                 exercise = $rootScope.exercises[$rootScope.select_train.id_exercise],
                 types = exercise.type.split(""),
-                units = [1,1],
-                $resultsOld = [$element.find("[ng-approach-old-result-1]"),$element.find("[ng-approach-old-result-2]")],
+                //units = [1, 1],
+                $resultsOld = [$element.find("[ng-approach-old-result-1]"), $element.find("[ng-approach-old-result-2]")],
                 $results = [$element.find("[ng-approach-result-1]"), $element.find("[ng-approach-result-2]")],
                 $iTimersOld = [$element.find("[ng-approach-old-rest]"), $element.find("[ng-approach-old-work]")],
                 $iTimers = [$element.find("[ng-approach-rest]"), $element.find("[ng-approach-work]")];
 
-            if(types[0] == "w"){
-                units[0] = $rootScope.settings.weight_unit;
-            }
-
-            if(types[0] == "d"){
-                units[0] = $rootScope.settings.distance_unit;
-            }
-
-            $rootScope.$watch("settings.is_show_time",function(is_show_time){
-                $element[is_show_time?"removeClass":"addClass"]("no-time");
+            $element[($rootScope.settings && $rootScope.settings.is_show_time) ? "removeClass" : "addClass"]("no-time");
+            $rootScope.$watch("settings.is_show_time", function (is_show_time) {
+                $element[is_show_time ? "removeClass" : "addClass"]("no-time");
             });
 
-            $results.forEach(function($result, index){
+            $results.forEach(function ($result, index) {
                 var type = types[index],
                     key = attrs.ngApproach + "." + type,
                     value = scope.$eval(key),
                     unit = $rootScope.units[unit_names[type]],
-                    coeff = unit[units[index]].coeff,
+                    id_unit = $rootScope.defaultUnits[type],
+                    coeff = unit[id_unit].coeff,
                     $btn = $result.next(),
                     unit_ids = Object.keys(unit);
 
-                $result.val(Math.floor(value*coeff*100)/100);
-                $result.on("change",function(){
+                $result.val(Math.floor(value * coeff * 100) / 100);
+                $result.on("change", function () {
                     var value = $result.val();
-                    coeff = unit[units[index]].coeff;
-                    setData(scope, key, value / coeff );
+                    id_unit = $rootScope.defaultUnits[type];
+                    coeff = unit[id_unit].coeff;
+                    setData(scope, key, value / coeff);
                 });
-                scope.$watch(key,function(newValue){
-                    coeff = unit[units[index]].coeff;
-                    $result.val(Math.floor(newValue*coeff*100)/100);
+                scope.$watch(key, function (newValue) {
+                    id_unit = $rootScope.defaultUnits[type];
+                    coeff = unit[id_unit].coeff;
+                    $result.val(Math.floor(newValue * coeff * 100) / 100);
                 });
-
-                $btn.css("background",unit[units[index]].color);
-                $btn.html(unit[units[index]].sym);
-                $btn.on("click",function(){
-                    var id = units[index].toString(),
-                        unit_index = unit_ids.indexOf(id) + 1;
-                    units[index] = unit_ids[unit_index%unit_ids.length];
-                    coeff = unit[units[index]].coeff;
+                $btn.css("background", unit[id_unit].color);
+                $btn.html(unit[id_unit].sym);
+                $btn.on("click", function () {
+                    id_unit = $rootScope.defaultUnits[type].toString();
+                    var unit_index = unit_ids.indexOf(id_unit) + 1;
+                    id_unit = unit_ids[unit_index % unit_ids.length];
+                    $rootScope.defaultUnits[type] = id_unit;
+                    $rootScope.$apply();
+                });
+                $rootScope.$watch("defaultUnits."+type, function(id){
+                    id_unit = id;
+                    coeff = unit[id_unit].coeff;
                     value = scope.$eval(key);
-                    $result.val(Math.floor(value*coeff*100)/100);
-                    $btn.css("background",unit[units[index]].color);
-                    $btn.html(unit[units[index]].sym);
+                    $result.val(Math.floor(value * coeff * 100) / 100);
+                    $btn.css("background", unit[id_unit].color);
+                    $btn.html(unit[id_unit].sym);
                 });
             });
 
-            $iTimers.forEach(function($iTimer, index){
-                var type = index?"w":"r",
+            $iTimers.forEach(function ($iTimer, index) {
+                var type = index ? "w" : "r",
                     $btn = $iTimer.next(),
                     key = attrs.ngApproach + ".t" + type,
-                    value = scope.$eval(key)|| 0,
+                    value = scope.$eval(key) || 0,
                     timeId,
-                    stopTimer = function(){
+                    stopTimer = function () {
                         $timeout.cancel(timeId);
                         timeId = null;
                     },
-                    tickTimer = function(){
-                        timeId = $timeout(function(){
-                            value = scope.$eval(key)||0;
-                            if(value < 59 * 60 + 59 ){
+                    tickTimer = function () {
+                        timeId = $timeout(function () {
+                            value = scope.$eval(key) || 0;
+                            if (value < 59 * 60 + 59) {
                                 setData(scope, key, value + 1);
                                 tickTimer();
-                            }else{
+                            } else {
                                 stopTimer();
                             }
-                        },1000);
+                        }, 1000);
                     };
 
-                $iTimer.val(toTime(value));
-                scope.$watch(key,function(newValue){
-                    $iTimer.val(toTime(newValue||0));
+                $iTimer.on("change.time",function(){
+                    var aTime = $iTimer.val().split(":");
+                    value = parseInt(aTime[0]) * 60 + parseInt(aTime[1]);
+                    setData(scope, key, value, true);
+                    $rootScope.$broadcast("stopTimer", "all");
                 });
-                $btn.on("click",function(){
-                    value = scope.$eval(key)||0;
-                    if(timeId){
+                $iTimer.val(toTime(value));
+                scope.$watch(key, function (newValue) {
+                    $iTimer.val(toTime(newValue || 0)).change();
+                });
+                $btn.on("click", function () {
+                    value = scope.$eval(key) || 0;
+                    if (timeId) {
                         stopTimer();
                     }
-                    if(value == 0){
-                        $rootScope.$broadcast("stopTimer",key);
+                    if (value == 0) {
+                        $rootScope.$broadcast("stopTimer", key);
                         tickTimer();
                     }
                 });
-                $iTimer.on("click",function(){
-                    value = scope.$eval(key)||0;
-                    if(timeId){
+                $iTimer.on("click", function () {
+                    value = scope.$eval(key) || 0;
+                    if (timeId) {
                         stopTimer();
                     }
                 });
 
-                $rootScope.$on("stopTimer",function(tKey){
-                    if(tKey!= key){
+                $rootScope.$on("stopTimer", function (tKey) {
+                    if (tKey != key) {
                         stopTimer();
                     }
                 });
             });
 
-            $iTimersOld.forEach(function($iTimer, index){
-                var type = index?"w":"r",
+            $iTimersOld.forEach(function ($iTimer, index) {
+                var type = index ? "w" : "r",
                     key = attrs.ngApproachOld + ".t" + type,
-                    value = scope.$eval(key)|| 0;
+                    value = scope.$eval(key) || 0;
                 $iTimer.html(toTime(value));
-                scope.$watch(key,function(newValue){
-                    $iTimer.html(toTime(newValue||0));
+                scope.$watch(key, function (newValue) {
+                    $iTimer.html(toTime(newValue || 0));
                 });
             });
 
 
-            $resultsOld.forEach(function($result, index){
+            $resultsOld.forEach(function ($result, index) {
                 var type = types[index],
                     key = attrs.ngApproachOld + "." + type,
                     value = scope.$eval(key) || 0,
+                    id_unit = $rootScope.defaultUnits[type],
                     unit = $rootScope.units[unit_names[type]],
-                    coeff = unit[units[index]].coeff,
+                    coeff = unit[id_unit].coeff,
                     unit_ids = Object.keys(unit);
 
-                $result.html(Math.floor(value*coeff*100)/100);
-                scope.$watch(key,function(newValue){
+                $result.html(Math.floor(value * coeff * 100) / 100);
+                scope.$watch(key, function (newValue) {
                     newValue = newValue || 0;
-                    coeff = unit[units[index]].coeff;
-                    $result.html(Math.floor(newValue*coeff*100)/100);
+                    id_unit = $rootScope.defaultUnits[type];
+                    coeff = unit[id_unit].coeff;
+                    $result.html(Math.floor(newValue * coeff * 100) / 100);
+                });
+                $rootScope.$watch("defaultUnits."+type, function(id){
+                    id_unit = id;
+                    coeff = unit[id_unit].coeff;
+                    value = scope.$eval(key);
+                    $result.html(Math.floor(value * coeff * 100) / 100);
                 });
             });
 

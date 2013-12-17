@@ -32,8 +32,8 @@ app.directive('ngChoseUnit', function($compile, $rootScope) {
 
             scope.$watchCollection("["+attrs.ngChoseUnit+", "+attrs.ngChoseUnitData+"]", function(values){
                 var selected,
-                    id = values[0].toString();
-                data = values[1];
+                    id = (values[0] || scope.$eval(attrs.ngChoseUnit) || 1).toString();
+                data = values[1] || scope.$eval(attrs.ngChoseUnitData);
                 if(data){
                     keys = Object.keys(data);
                     selected = data[id];

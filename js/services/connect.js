@@ -8,13 +8,21 @@ app.factory('connect',function ($rootScope){
         app_sign = "1",//md5(app_id + app_key);
         sourcePath,
         exerciseSources = {},
+        defaultSettings = {
+            is_show_time: true,
+            is_auto_update: true,
+            weight_unit: 1,
+            distance_unit: 1
+        },
         userData = {
             user: null,
             data: null,
             train: null,
-            note: null
+            note: null,
+            settings: defaultSettings
         }, loginListeners = [];
 
+    $rootScope.settings = defaultSettings;
 
     function censor(censor) {
         var i = 0;
@@ -38,7 +46,7 @@ app.factory('connect',function ($rootScope){
     })(console.log);
 
     function saveToLocalStorage(){
-        window.localStorage["fitmus-app-user-data"] = JSON.stringify(userData);
+        window.localStorage["fitmus-app-user-data"] = JSON.stringify(_.cloneCleaner(userData));
     }
 
     function loadFromLocalStorage(){
@@ -48,7 +56,7 @@ app.factory('connect',function ($rootScope){
     }
 
     function saveExerciseUri(){
-        window.localStorage["fitmus-app-exercises"] = JSON.stringify(exerciseSources);
+        window.localStorage["fitmus-app-exercises"] = JSON.stringify(_.cloneCleaner(exerciseSources));
     }
 
     function loadExerciseUri(){
@@ -184,6 +192,7 @@ app.factory('connect',function ($rootScope){
         isLogin: function(){
             loadFromLocalStorage();
             loadExerciseUri();
+            $rootScope.settings = userData.settings;
             return !!userData.user;
         },
         onLogin:function(callback){
@@ -283,7 +292,7 @@ app.factory('connect',function ($rootScope){
                     postJSON("note/",{ data: _.cloneCleaner(toUpdate)},function(err, data){
                         markRecord(data);
                         userData.note = data;
-                        callback(err, data);
+                        cb(err, data);
                     });
                 },
                 train: function(cb){
@@ -296,7 +305,7 @@ app.factory('connect',function ($rootScope){
                     postJSON("train/",{ data: _.cloneCleaner(toUpdate)},function(err, data){
                         markRecord(data);
                         userData.train = data;
-                        callback(err, data);
+                        cb(err, data);
                     });
                 }
             },function(err, data){

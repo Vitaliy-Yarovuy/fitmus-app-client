@@ -320,6 +320,9 @@ body.ui-overlay-a {
   vertical-align: middle;
   overflow: hidden;
 }
+.ui-page .ui-content .ui-listview li .btn-remove {
+  color: #333;
+}
 .ui-page .ui-content .ui-listview li table {
   margin: 0 -0.5em 0.5em;
 }

@@ -5,12 +5,13 @@
 function SettingsCtrl($scope, connect, navigation, $rootScope) {
     var isLoadData = false;
 
-    $rootScope.settings = {
-        is_show_time: true,
-        is_auto_update: true,
-        weight_unit: 1,
-        distance_unit: 1
-    };
+    // move to connect
+    //$rootScope.settings = {
+    //    is_show_time: true,
+    //    is_auto_update: true,
+    //    weight_unit: 1,
+    //    distance_unit: 1
+    //};
 
 
     $scope.logout = function(){
