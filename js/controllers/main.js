@@ -153,7 +153,7 @@ function MainCtrl($scope, connect, navigation, $rootScope, $sce) {
     function addExercise(id_exercise, id_muscle_group){
         var timestamp = $rootScope.select_timestamp,train;
 
-        train = $rootScope.trains[timestamp].filter(function(tr){
+        train = $rootScope.trains[timestamp] &&  $rootScope.trains[timestamp].filter(function(tr){
             return tr.id_exercise == id_exercise && tr.id_exercise == id_muscle_group;
         })[0];
 
