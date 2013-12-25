@@ -23,6 +23,7 @@ app.directive('ngApproach', function ($compile, $rootScope, $timeout) {
     },true);
 
     function setData(scope, path, value, isSilent) {
+        console.log("setData",path, value, isSilent);
         var key,
             pathEls = path.split("."),
             element = scope;
