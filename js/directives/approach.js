@@ -114,7 +114,7 @@ app.directive('ngApproach', function ($compile, $rootScope, $timeout) {
                     tickTimer = function () {
                         timeId = $timeout(function () {
                             value = scope.$eval(key) || 0;
-                            if (value < 59 * 60 + 59) {
+                            if (value < (59 * 60 + 59)) {
                                 setData(scope, key, value + 1);
                                 tickTimer();
                             } else {
