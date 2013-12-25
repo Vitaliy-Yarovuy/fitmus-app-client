@@ -33,13 +33,18 @@ function ExerciseCtrl($scope, connect, navigation, $rootScope, $sce, $timeout) {
         updateList();
     };
 
+    $scope.isShowRemoveBtn = function(index){
+        var key = Object.keys($rootScope.select_train.result).length;
+        return parseInt(index) != key;
+    };
+
     var unWatch = $rootScope.$watch("select_train",function(newTrain){
         if(newTrain){
             $rootScope.$watch("select_train.result",function(newResult){
                 if(newResult){
                     var key = Object.keys(newResult).length,
                         obj = newResult[key];
-                    if(obj['c'] || obj['w'] || obj['d'] || obj['t'] || obj['tr'] || obj['tw']){
+                    if(key == 0 || obj['c'] || obj['w'] || obj['d'] || obj['t'] || obj['tr'] || obj['tw']){
                         addEmptyResult();
                         updateList();
                     }

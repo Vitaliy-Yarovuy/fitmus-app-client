@@ -23,6 +23,10 @@ function NoteCtrl($scope, connect, navigation, $rootScope, $sce) {
         }
     });
 
+    $rootScope.$on('sync', function(){
+        isLoadData = false;
+    });
+
     $rootScope.$watch('select_date',selectTimestamp);
 
     function selectTimestamp(newDate){

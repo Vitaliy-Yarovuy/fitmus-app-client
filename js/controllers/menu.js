@@ -13,10 +13,12 @@ function MenuCtrl($scope, connect, navigation, $rootScope, $sce) {
             textonly: false,
             html: ""
         });
+        var page = $.mobile.activePage.attr('id');
+        $.mobile.changePage("#empty", {transition: "slideup"});
         connect.sync(function () {
+            $.mobile.changePage("#"+page, {transition: "slideup"});
             $.mobile.loading("hide");
-            $.mobile.changePage("#main_page", {transition: "slideup"});
-        })
+        });
     };
 
     $scope.exit = function () {

@@ -12,10 +12,10 @@ function MainCtrl($scope, connect, navigation, $rootScope, $sce) {
 
     $scope.edit_mode = false;
 
-    navigation.beforePageChange("main_page",function(id_add_exercise){
+    navigation.beforePageChange("main_page",function(id_add_exercise, id_muscle_group){
         var run = function(){
             if(id_add_exercise){
-                addExercise(id_add_exercise);
+                addExercise(id_add_exercise, id_muscle_group);
             }else{
                 setBlock();
             }
@@ -35,6 +35,10 @@ function MainCtrl($scope, connect, navigation, $rootScope, $sce) {
                 run();
             });
         }
+    });
+
+    $rootScope.$on('sync', function(){
+        isLoadData = false;
     });
 
     $rootScope.$watch('trains',_.debounce(function(trains){
@@ -146,29 +150,48 @@ function MainCtrl($scope, connect, navigation, $rootScope, $sce) {
         });
     }
 
-    function addExercise(id_exercise){
-        var timestamp = $rootScope.select_timestamp,
+    function addExercise(id_exercise, id_muscle_group){
+        var timestamp = $rootScope.select_timestamp,train;
+
+        train = $rootScope.trains[timestamp].filter(function(tr){
+            return tr.id_exercise == id_exercise && tr.id_exercise == id_muscle_group;
+        })[0];
+
+        if(train){
+            if(train.status == "Active"){
+
+            }else{
+                train.status = "Active";
+                if(is_replace){
+                    $scope.select_trains[insert_index-1].status = "Deleted";
+                    $scope.select_trains.splice(insert_index-1,1,train);
+                }else{
+                    $scope.select_trains.splice(insert_index,0,train);
+                }
+            }
+        }else{
             train = {
                 comment: "",
                 date: $rootScope.select_date+" 12:00:00",
                 date_unix: timestamp,
                 id_exercise: id_exercise,
-                id_muscle_group: $scope.exercises[id_exercise].id_muscle_group,
+                id_muscle_group: id_muscle_group,
                 mode: "Normal",
                 position: "",
                 result: null,
                 status: "Active"
             };
-        if(is_replace){
-            $scope.select_trains[insert_index-1].status = "Deleted";
-            $scope.select_trains.splice(insert_index-1,1,train);
-        }else{
-            $scope.select_trains.splice(insert_index,0,train);
-        }
-        if(!$rootScope.trains[timestamp]){
-            $rootScope.trains[timestamp] = [train];
-        }else{
-            $rootScope.trains[timestamp].push(train);
+            if(is_replace){
+                $scope.select_trains[insert_index-1].status = "Deleted";
+                $scope.select_trains.splice(insert_index-1,1,train);
+            }else{
+                $scope.select_trains.splice(insert_index,0,train);
+            }
+            if(!$rootScope.trains[timestamp]){
+                $rootScope.trains[timestamp] = [train];
+            }else{
+                $rootScope.trains[timestamp].push(train);
+            }
         }
         normalisePosition($scope.select_trains);
         updateList();

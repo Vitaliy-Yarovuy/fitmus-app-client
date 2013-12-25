@@ -113,23 +113,34 @@
 }
 #auth_page h1 {
   color: #fff;
-  margin: .9em 0 .1em 0;
+  margin: 3.96em 0 .44em 0;
+  text-align: center;
+  line-height: 1;
+  font-size: 1em;
+}
+#auth_page h1 > span {
+  display: inline-block;
+  position: relative;
+  padding-bottom: 1em;
+}
+#auth_page h1 > span > span {
   font-size: 4.4em;
+  display: inline-block;
   letter-spacing: -0.03em;
   -webkit-transform: scale(1, 1.4);
   -moz-transform: scale(1, 1.4);
   -ms-transform: scale(1, 1.4);
   -o-transform: scale(1, 1.4);
   transform: scale(1, 1.4);
-  text-align: right;
-  line-height: 1;
 }
-#auth_page aside {
-  text-align: right;
+#auth_page h1 > span aside {
+  position: absolute;
+  bottom: 0;
+  right: 0.15em;
   font-size: .8em;
   color: #8D8D8D;
 }
-#auth_page aside em {
+#auth_page h1 > span aside em {
   font-weight: normal;
   font-style: normal;
   color: #fff;

@@ -150,6 +150,24 @@ body.ui-overlay-a {
 .ui-page-theme-a .ui-btn:hover {
   background: transparent;
 }
+.ui-page .text-shadow {
+  text-shadow: 0 1px 0 #111!important;
+}
+.ui-page .text-shadow .ui-btn {
+  text-shadow: 0 1px 0 #111!important;
+}
+.ui-page .text-shadow [class*="fit-icon-"] {
+  text-shadow: 0 1px 0 #111!important;
+}
+.ui-page .no-text-shadow {
+  text-shadow: 0 0 0 #111!important;
+}
+.ui-page .no-text-shadow .ui-btn {
+  text-shadow: 0 0 0 #111!important;
+}
+.ui-page .no-text-shadow [class*="fit-icon-"] {
+  text-shadow: 0 0 0 #111!important;
+}
 .ui-page .ui-header.ui-bar-inherit {
   background: #2D2D2D;
 }

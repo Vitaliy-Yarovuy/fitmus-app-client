@@ -15,23 +15,23 @@
     <div id="empty_page" data-role="page" data-quicklinks="true" data-theme="b" class="hide"></div>
     <div id="auth_page" data-role="page" data-quicklinks="true" data-theme="b" ng-controller="AuthCtrl" class="hide">
       <div data-role="content">
-        <h1>FITMUS</h1>
-        <aside>
-          VERSION
-          &nbsp;<em>2.0</em>
-        </aside>
+        <h1><span><span>FITMUS</span><br>
+            <aside>
+              VERSION
+              &nbsp;<em>2.0</em>
+            </aside></span></h1>
         <input id="login" type="text" data-clear-btn="true" name="text-3" placeholder="Логин" data-theme="a" ng-model="user" class="ui-corner-none">
         <input id="pass" type="password" data-clear-btn="true" name="text-3" placeholder="Пароль" data-theme="a" ng-model="pass" class="ui-corner-none"><a _href="#main_page" ng-click="login()" class="ui-input-btn ui-btn ui-min">Войти</a>
       </div>
       <div data-role="footer" data-position="fixed">
         <ul>
-          <li><a href="http://fitmus.com">О проекте</a></li>
-          <li><a href="http://fitmus.com/auth/registration">Регистрация</a></li>
+          <li><a href="http://fitmus.com" ng-external-link>О проекте</a></li>
+          <li><a href="http://fitmus.com/auth/registration" ng-external-link>Регистрация</a></li>
         </ul>
       </div>
     </div>
     <div id="main_page" data-role="page" data-quicklinks="true" ng-controller="MainCtrl" class="hide">
-      <div data-role="header" data-position="fixed">
+      <div data-role="header" data-position="fixed" class="text-shadow">
         <h2><span class="fit-logo">F</span>Расписание</h2><a href="#" class="main_menu-link ui-btn ui-btn-no-border ui-btn-left"><i class="fit-icon-big fit-icon-schedules"></i></a>
         <div class="btn-group-right"><a href="#cooment_popup" data-rel="popup" data-transition="pop" class="ui-btn ui-btn-no-border"><i class="fit-icon-large fit-icon-comment"></i></a><a href="#" ng-click="toggleState()" ng-class="edit_mode?'ui-btn-active':''" class="ui-btn ui-btn-no-border"><i class="fit-icon-large fit-icon-pencil"></i></a><a href="#" class="ui-btn ui-btn-no-border"><i class="fit-icon-large fit-icon-date"></i>
             <input type="date" data-input-hide="true" ng-model="select_date" ng-mobipick-root="true" ng-mobipick="{ locale: &quot;ru&quot;, buttonTheme: &quot;a&quot;, popup:{ theme: &quot;b&quot; } }"></a></div>
@@ -48,9 +48,9 @@
           <li ng-repeat="train in select_trains "><img ng-exercise-img="exercises[train.id_exercise]" class="exercise-img">
             <div ng-chose-mode="train" class="li-content"><a href="#" ng-click="select(train)">
                 <h3 ng-color-mode>{{exercises[train.id_exercise].name}}</h3></a>
-              <p>{{musclegroups[train.id_muscle_group]}}</p><a href="#" ng-next-mode class="ui-btn ui-btn-no-border ui-btn-bottom-right"><i class="fit-icon-mid fit-icon-charge"></i></a>
+              <p>{{musclegroups[train.id_muscle_group]}}</p><a href="#" ng-next-mode class="ui-btn ui-btn-no-border ui-btn-bottom-right"><i class="fit-icon-mid fit-icon-charge no-text-shadow"></i></a>
             </div>
-            <div class="li-control ui-grid-d center">
+            <div class="li-control ui-grid-d center text-shadow">
               <div class="ui-block-a"><a href="#" ng-click="addAfter(train)" class="ui-btn ui-btn-no-border"><i class="fit-icon-large fit-icon-add"></i></a></div>
               <div class="ui-block-b"><a href="#" ng-click="positionUp(train)" class="ui-btn ui-btn-no-border"><i class="fit-icon-large fit-icon-up"></i></a></div>
               <div class="ui-block-c"><a href="#" ng-click="positionDown(train)" class="ui-btn ui-btn-no-border"><i class="fit-icon-large fit-icon-down"></i></a></div>
@@ -59,7 +59,7 @@
             </div>
           </li>
           <li ng-if="!select_trains.length">
-            <div class="li-control ui-grid-d center">
+            <div class="li-control ui-grid-d center text-shadow">
               <div class="ui-block-a"><a href="#select_muscle_page" data-transition="slideup" class="ui-btn ui-btn-no-border"><i class="fit-icon-large fit-icon-add"></i></a></div>
             </div>
           </li>
@@ -67,7 +67,7 @@
       </div>
     </div>
     <div id="exercise_page" data-role="page" data-quicklinks="true" ng-controller="ExerciseCtrl" class="hide">
-      <div data-role="header" data-position="fixed">
+      <div data-role="header" data-position="fixed" class="text-shadow">
         <h2><span class="fit-logo">F</span>{{select_timestamp*1000 | date: 'EEEE'}},&nbsp;<span class="small">{{select_timestamp*1000 | date: 'd MMMM'}}</span></h2><a href="#main_page" data-transition="slideup" class="ui-btn ui-btn-no-border ui-btn-left less-left"><i class="fit-icon-large fit-icon-left-arrow"></i></a>
         <div class="btn-group-right"><a href="#cooment_popup" data-rel="popup" data-transition="pop" class="ui-btn ui-btn-no-border"><i class="fit-icon-large fit-icon-comment"></i></a></div>
         <div data-role="navbar">
@@ -82,7 +82,7 @@
           <li><img ng-exercise-img="exercises[select_train.id_exercise]" class="exercise-img">
             <div ng-chose-mode="select_train" class="li-content">
               <h3 ng-color-mode>{{exercises[select_train.id_exercise].name}}</h3>
-              <p>{{musclegroups[select_train.id_muscle_group]}}</p><a href="#" ng-next-mode class="ui-btn ui-btn-no-border ui-btn-bottom-right"><i class="fit-icon-mid fit-icon-charge"></i></a>
+              <p>{{musclegroups[select_train.id_muscle_group]}}</p><a href="#" ng-next-mode class="ui-btn ui-btn-no-border ui-btn-bottom-right"><i class="fit-icon-mid fit-icon-charge no-text-shadow"></i></a>
             </div>
           </li>
           <li ng-repeat="(index,approach) in select_train.result| orderIntKey:-1">
@@ -103,7 +103,7 @@
                   </td>
                 </tr>
                 <tr class="for-time">
-                  <td><a href="#" ng-click="remove(index+1)" class="ui-btn ui-btn-no-border ui-btn-short btn-remove"><i class="fit-icon-mid fit-icon-remove"></i></a></td>
+                  <td><a href="#" ng-if="isShowRemoveBtn(index+1)" ng-click="remove(index+1)" class="ui-btn ui-btn-no-border ui-btn-short btn-remove"><i class="fit-icon-mid fit-icon-remove"></i></a></td>
                   <td>
                     <div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset ui-input-has-additional">
                       <input type="text" value="00:00" ng-mobipick-time ng-approach-rest readonly class="no-jqm-widget"><a href="#" class="ui-btn ui-input-add two-line">Отдых<br><i class="ui-icon-clock-fix"></i></a>
@@ -118,7 +118,7 @@
                 </tr>
               </table>
               <dl class="left">
-                <dt class="for-no-time-inline"><a href="#" ng-click="remove(index+1)" class="ui-btn ui-btn-no-border ui-btn-short btn-remove"><i class="fit-icon-mid fit-icon-remove"></i></a></dt>
+                <dt class="for-no-time-inline"><a href="#" ng-if="isShowRemoveBtn(index+1)" ng-click="remove(index+1)" class="ui-btn ui-btn-no-border ui-btn-short btn-remove"><i class="fit-icon-mid fit-icon-remove"></i></a></dt>
                 <dd>БЫЛО:</dd>
                 <dt><span ng-approach-old-result-1>95</span>x<span ng-approach-old-result-2>8</span></dt>
               </dl>
@@ -135,7 +135,7 @@
       </div>
     </div>
     <div id="select_muscle_page" data-role="page" data-quicklinks="true" ng-controller="MuscleCtrl" class="hide">
-      <div data-role="header" data-position="fixed">
+      <div data-role="header" data-position="fixed" class="text-shadow">
         <h2><span class="fit-logo">F</span>Добавить упражнение</h2><a href="#main_page" data-transition="slideup" class="ui-btn ui-btn-no-border ui-btn-left less-left"><i class="fit-icon-large fit-icon-left-arrow"></i></a>
       </div>
       <div data-role="content">
@@ -145,7 +145,7 @@
       </div>
     </div>
     <div id="select_exercise_page" data-role="page" data-quicklinks="true" ng-controller="SelectExerciseCtrl" class="hide">
-      <div data-role="header" data-position="fixed">
+      <div data-role="header" data-position="fixed" class="text-shadow">
         <h2><span class="fit-logo">F</span>Добавить упражнение</h2><a href="#select_muscle_page" data-transition="slideup" class="ui-btn ui-btn-no-border ui-btn-left less-left"><i class="fit-icon-large fit-icon-left-arrow"></i></a>
       </div>
       <div data-role="content">
@@ -154,13 +154,13 @@
             <div class="li-content">
               <h3 class="blue">{{exercise.name}}</h3>
               <p>{{musclegroups[muscle_id]}}</p>
-            </div><a href="#main_page?{{exercise.id}}" data-transition="slideup" class="ui-btn ui-btn-no-border ui-btn-bottom-right"><i class="fit-icon-big fit-icon-add"></i></a>
+            </div><a href="#main_page?{{exercise.id}}|{{muscle_id}}" data-transition="slideup" class="ui-btn ui-btn-no-border ui-btn-bottom-right no-text-shadow"><i class="fit-icon-big fit-icon-add"></i></a>
           </li>
         </ul>
       </div>
     </div>
     <div id="note_page" data-role="page" data-quicklinks="true" ng-controller="NoteCtrl" class="hide">
-      <div data-role="header" data-position="fixed">
+      <div data-role="header" data-position="fixed" class="text-shadow">
         <h2><span class="fit-logo">F</span>Записи</h2><a href="#" class="main_menu-link ui-btn ui-btn-no-border ui-btn-left"><i class="fit-icon-big fit-icon-schedules"></i>
           <div class="btn-group-right"><a href="#cooment_popup" data-rel="popup" data-transition="pop" class="ui-btn ui-btn-no-border"><i class="fit-icon-large fit-icon-comment"></i></a><a href="#" class="ui-btn ui-btn-no-border"><i class="fit-icon-large fit-icon-date"></i>
               <input type="date" data-input-hide="true" ng-model="select_date" ng-mobipick-root="true" ng-mobipick="{ locale: &quot;ru&quot;, buttonTheme: &quot;a&quot;, popup:{ theme: &quot;b&quot; } }"></a></div>

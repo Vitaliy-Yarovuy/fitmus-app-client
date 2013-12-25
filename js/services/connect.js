@@ -114,16 +114,6 @@ app.factory('connect',function ($rootScope){
         });
     }
 
-
-    function connectExerciseToMuscle(data){
-        angular.forEach(data.musclegroup_exercise,function(values, id_muscle_group){
-            for(var i=0;i< values.length;i++){
-                var id_exercise = values[i];
-                data.exercise[id_exercise].id_muscle_group = id_muscle_group;
-            }
-        });
-    }
-
     function downloadSource(id_exercise, cb){
         var exercise = userData.data.exercise[id_exercise];
         var run = function(){
@@ -235,7 +225,6 @@ app.factory('connect',function ($rootScope){
                 return;
             }
             getJSON("syncdata/",function(err, data){
-                connectExerciseToMuscle(data||{});
                 startDownloadSource(data||{});
                 userData.data = data;
                 callback(err, data);
@@ -309,6 +298,7 @@ app.factory('connect',function ($rootScope){
                     });
                 }
             },function(err, data){
+                $rootScope.$broadcast('sync', true);
                 saveToLocalStorage();
                 callback(err,data);
             });

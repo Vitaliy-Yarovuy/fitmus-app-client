@@ -8,7 +8,7 @@ app.factory('navigation',function ($rootScope){
         var strPage = data.absUrl.split("#")[1],
             page = strPage?strPage.split("?")[0]:"",
             strParams = data.absUrl.split("?")[1]||"",
-            params = strParams.split("/");
+            params = strParams.split("|");
         console.log("pagebeforechange",page,params);
         if(pagesChangeListener[page]){
             pagesChangeListener[page].forEach(function(listener){
