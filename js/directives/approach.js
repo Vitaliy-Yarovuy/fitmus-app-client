@@ -179,18 +179,18 @@ app.directive('ngApproach', function ($compile, $rootScope, $timeout) {
                     coeff = unit[id_unit].coeff,
                     unit_ids = Object.keys(unit);
 
-                $result.html(Math.floor(value * coeff * 100) / 100);
+                $result.html(Math.floor(value * coeff * 100) / 100 + "");
                 scope.$watch(key, function (newValue) {
                     newValue = newValue || 0;
                     id_unit = $rootScope.defaultUnits[type];
                     coeff = unit[id_unit].coeff;
-                    $result.html(Math.floor(newValue * coeff * 100) / 100);
+                    $result.html(Math.floor(newValue * coeff * 100) / 100 + "");
                 });
                 $rootScope.$watch("defaultUnits."+type, function(id){
                     id_unit = id;
                     coeff = unit[id_unit].coeff;
-                    value = scope.$eval(key);
-                    $result.html(Math.floor(value * coeff * 100) / 100);
+                    value = scope.$eval(key) || 0;
+                    $result.html(Math.floor(value * coeff * 100) / 100 + "");
                 });
             });
 
