@@ -168,6 +168,9 @@ body.ui-overlay-a {
 .ui-page .no-text-shadow [class*="fit-icon-"] {
   text-shadow: 0 0 0 #111!important;
 }
+.ui-page .ui-header a {
+  z-index: 10000;
+}
 .ui-page .ui-header.ui-bar-inherit {
   background: #2D2D2D;
 }
