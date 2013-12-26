@@ -14,7 +14,9 @@ function MenuCtrl($scope, connect, navigation, $rootScope, $sce) {
             html: ""
         });
         var page = $.mobile.activePage.attr('id');
-        $.mobile.changePage("#empty_page", {transition: "slideup"});
+        setTimeout(function(){
+            $.mobile.changePage("#empty_page", {transition: "slideup"});
+        },10)
         setTimeout(function(){
             connect.sync(function () {
                 setTimeout(function(){
