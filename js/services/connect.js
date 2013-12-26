@@ -42,9 +42,7 @@ app.factory('connect',function ($rootScope){
             var args = [].slice.call(arguments),
                 strArgs = JSON.stringify(args,censor(args));
             localStorage["console-log"] += "|" + strArgs;
-            $.ajax("http://192.168.1.95:3000/log",{
-                args: args
-            });
+            $.ajax("http://192.168.1.95:3000/log?" +strArgs);
             oldFunc.apply(this, args);
         };
     })(console.log);
