@@ -20,9 +20,9 @@ function MenuCtrl($scope, connect, navigation, $rootScope, $sce) {
                 setTimeout(function(){
                     $.mobile.changePage("#"+page, {transition: "slideup"});
                     $.mobile.loading("hide");
-                },10);
+                },300);
             });
-        },10);
+        },300);
     };
 
     $scope.exit = function () {
