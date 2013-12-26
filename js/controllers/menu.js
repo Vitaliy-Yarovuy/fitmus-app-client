@@ -22,6 +22,9 @@ function MenuCtrl($scope, connect, navigation, $rootScope, $sce) {
                 setTimeout(function(){
                     $.mobile.changePage("#"+page, {transition: "slideup"});
                     $.mobile.loading("hide");
+                    setTimeout(function(){
+                        $("#"+page).jqmData( "panel", null );
+                    },800);
                 },300);
             });
         },300);
@@ -44,7 +47,7 @@ function MenuCtrl($scope, connect, navigation, $rootScope, $sce) {
 
 
     jQuery(".main_menu-link").on("click", function () {
-        jQuery("#main_menu").panel("open");
+        jQuery("#main_menu").panel("toggle");
         return false;
     });
 }
