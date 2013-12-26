@@ -127,7 +127,7 @@ app.directive('ngApproach', function ($compile, $rootScope, $timeout) {
 
                 $iTimer.on("change.time",function(){
                     var aTime = $iTimer.val().split(":");
-                    value = parseInt(aTime[0]) * 60 + parseInt(aTime[1]);
+                    value = parseInt(aTime[0],10) * 60 + parseInt(aTime[1],10);
                     setData(scope, key, value, true);
                     $rootScope.$broadcast("stopTimer", "all");
                 });
