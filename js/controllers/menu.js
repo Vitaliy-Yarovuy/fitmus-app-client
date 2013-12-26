@@ -14,11 +14,15 @@ function MenuCtrl($scope, connect, navigation, $rootScope, $sce) {
             html: ""
         });
         var page = $.mobile.activePage.attr('id');
-        $.mobile.changePage("#empty", {transition: "slideup"});
-        connect.sync(function () {
-            $.mobile.changePage("#"+page, {transition: "slideup"});
-            $.mobile.loading("hide");
-        });
+        $.mobile.changePage("#empty_page", {transition: "slideup"});
+        setTimeout(function(){
+            connect.sync(function () {
+                setTimeout(function(){
+                    $.mobile.changePage("#"+page, {transition: "slideup"});
+                    $.mobile.loading("hide");
+                },10);
+            });
+        },10);
     };
 
     $scope.exit = function () {
