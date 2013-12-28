@@ -1,5 +1,6 @@
 body {
   font-family: Arial;
+  background: #353535;
 }
 body.ui-overlay-a {
   background: #353535;
@@ -43,6 +44,16 @@ body.ui-overlay-a {
   }
 }
 */
+#fit-app {
+  overflow: hidden;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  /* Chrome and Safari */
+
+  -moz-backface-visibility: hidden;
+  /* Firefox */
+
+}
 .ui-fit-popup {
   width: 100%;
   height: 100%;
