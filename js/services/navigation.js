@@ -4,7 +4,7 @@ app.factory('navigation',function ($rootScope){
     var page_name,
         pagesChangeListener = {},
         pagesLeaveListener = {};
-    $(document).bind( "pagebeforechange", _.busy(function( e, data ) {
+    $(document).bind( "pagebeforechange", /*_.busy(*/function( e, data ) {
         var strPage = data.absUrl.split("#")[1],
             page = strPage?strPage.split("?")[0]:"",
             strParams = data.absUrl.split("?")[1]||"",
@@ -21,7 +21,8 @@ app.factory('navigation',function ($rootScope){
             });
         }
         page_name = page;
-    },350));
+        return true;
+    }/*,350)*/);
 
     return {
         beforePageChange: function(page, callback){

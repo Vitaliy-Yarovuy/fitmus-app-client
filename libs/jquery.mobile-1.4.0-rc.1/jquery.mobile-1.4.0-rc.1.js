@@ -5216,9 +5216,9 @@ $.widget( "mobile.page", {
 
 			// DEPRECATED - this call only, in favor of the before transition
 			// if the page beforechange default is prevented return early
-			if ( !this._triggerPageBeforeChange(toPage, triggerData, settings) ) {
-				return;
-			}
+			//if ( !this._triggerPageBeforeChange(toPage, triggerData, settings) ) {
+			//	return;
+			//}
 
 			// if the (content|page)beforetransition default is prevented return early
 			// Note, we have to check for both the deprecated and new events
