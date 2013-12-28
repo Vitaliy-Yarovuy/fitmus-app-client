@@ -45,4 +45,8 @@
 
     });
 
+    var ua = navigator.userAgent.toLowerCase();
+    if(ua.indexOf('msie') != -1){
+        $("body").addClass("ie");
+    }
 })( jQuery );
