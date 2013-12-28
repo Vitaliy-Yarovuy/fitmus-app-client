@@ -70,6 +70,12 @@ app.factory('connect',function ($rootScope){
         }
     }
 
+    function showInfo(messages){
+        _.each(messages,function(message){
+            alert(message);
+        });
+    }
+
     function getJSON(url,callback){
         if(!userData.user){
             callback({
@@ -83,6 +89,7 @@ app.factory('connect',function ($rootScope){
             user_id: userData.user.id,
             token: userData.user.token
         }).done(function(data){
+            showInfo(data.info);
             callback(data.error,data.data);
         }).fail(function(jqXHR, textStatus, errorThrown){
             callback({
