@@ -1,14 +1,5 @@
 app.directive('ngChoseUnit', function($compile, $rootScope) {
 
-    function getData(scope,path){
-        var pathEls = path.split("."),
-            element = scope;
-        while(pathEls.length && element){
-            element = element[pathEls.shift()];
-        }
-        return element;
-    }
-
     function setData(scope,path,value){
         var key,
             pathEls = path.split("."),

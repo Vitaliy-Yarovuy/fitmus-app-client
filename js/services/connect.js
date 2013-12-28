@@ -54,6 +54,9 @@ app.factory('connect',function ($rootScope){
     function loadFromLocalStorage(){
         if(window.localStorage["fitmus-app-user-data"]){
             userData = JSON.parse(window.localStorage["fitmus-app-user-data"]);
+            if(!userData.settings){
+                userData.settings = defaultSettings;
+            }
         }
     }
 

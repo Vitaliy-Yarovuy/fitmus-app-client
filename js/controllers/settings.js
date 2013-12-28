@@ -14,6 +14,11 @@ function SettingsCtrl($scope, connect, navigation, $rootScope) {
     //};
 
 
+    $rootScope.$watch("settings",function(newSetting){
+        console.log("settings",newSetting);
+    });
+
+
     $scope.logout = function(){
         connect.logout();
         $.mobile.changePage("#auth_page",{transition:"slideup"});
