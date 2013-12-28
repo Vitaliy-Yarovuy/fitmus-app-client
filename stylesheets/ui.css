@@ -53,6 +53,8 @@ body.ui-overlay-a {
   -moz-backface-visibility: hidden;
   /* Firefox */
 
+  transform: translate3d(0, 0, 1px);
+  -webkit-transform: translate3d(0, 0, 1px);
 }
 .ui-fit-popup {
   width: 100%;
