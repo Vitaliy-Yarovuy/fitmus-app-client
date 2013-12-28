@@ -15,12 +15,12 @@ function MenuCtrl($scope, connect, navigation, $rootScope, $sce) {
         });
         var page = $.mobile.activePage.attr('id');
         setTimeout(function(){
-            $.mobile.changePage("#empty_page", {transition: "slideup"});
+            $.mobile.changePage("#empty_page", {transition: "none"});
         },10)
         setTimeout(function(){
             connect.sync(function () {
                 setTimeout(function(){
-                    $.mobile.changePage("#"+page, {transition: "slideup"});
+                    $.mobile.changePage("#"+page, {transition: "none"});
                     $.mobile.loading("hide");
                     setTimeout(function(){
                         $("#"+page).jqmData( "panel", null );

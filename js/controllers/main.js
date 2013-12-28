@@ -100,17 +100,17 @@ function MainCtrl($scope, connect, navigation, $rootScope, $sce) {
     $scope.addAfter = function(train){
         insert_index  = $scope.select_trains.indexOf(train)+1;
         is_replace  = false;
-        $.mobile.changePage("#select_muscle_page",{transition:"slideup"});
+        $.mobile.changePage("#select_muscle_page",{transition:"none"});
     };
     $scope.replace = function(train){
         insert_index  = $scope.select_trains.indexOf(train)+1;
         is_replace  = true;
-        $.mobile.changePage("#select_muscle_page",{transition:"slideup"});
+        $.mobile.changePage("#select_muscle_page",{transition:"none"});
     };
     $scope.select = function(train){
         $rootScope.select_train = train;
         $rootScope.select_train_old = findOldTrain(train);
-        $.mobile.changePage("#exercise_page",{transition:"slideup"});
+        $.mobile.changePage("#exercise_page",{transition:"none"});
     };
 
     function findOldTrain(selectTrain){

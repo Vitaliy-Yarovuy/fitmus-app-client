@@ -30,7 +30,7 @@ function AuthCtrl($scope, connect) {
                 $.mobile.loader("hide");
                 console.log(data);
                 setTimeout(function(){
-                    $.mobile.changePage("#main_page",{transition:"slideup"});
+                    $.mobile.changePage("#main_page",{transition:"none"});
                 },0)
             });
         });

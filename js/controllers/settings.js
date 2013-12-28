@@ -21,7 +21,7 @@ function SettingsCtrl($scope, connect, navigation, $rootScope) {
 
     $scope.logout = function(){
         connect.logout();
-        $.mobile.changePage("#auth_page",{transition:"slideup"});
+        $.mobile.changePage("#auth_page",{transition:"none"});
     };
 
     navigation.beforePageChange("settings_page",function(){
