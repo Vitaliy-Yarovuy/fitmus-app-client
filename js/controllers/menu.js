@@ -17,11 +17,7 @@ function MenuCtrl($scope, connect, navigation, $rootScope, $sce) {
         setTimeout(function(){
             connect.sync(function () {
                 setTimeout(function(){
-                    $.mobile.changePage("#"+page, {
-                        allowSamePageTransition: true,
-                        transition: 'none',
-                        reloadPage: true
-                    });
+                    navigation.refresh();
                     $.mobile.loading("hide");
                     setTimeout(function(){
                         $("#"+page).jqmData( "panel", null );
