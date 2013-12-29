@@ -34,7 +34,7 @@ function NoteCtrl($scope, connect, navigation, $rootScope, $sce, timeconverter) 
 
     function selectTimestamp(newDate){
         if($scope.nodes){
-            var newTimestamp = timeconverter.convertDayToTimestamp(newDate) + 12 * 60 * 60;
+            var newTimestamp = timeconverter.convertDayToTimestamp(newDate) - 12 * 60 * 60;
             if(!$scope.nodes[newTimestamp]){
                 $scope.nodes[newTimestamp] = {
                     date: $rootScope.select_date,
