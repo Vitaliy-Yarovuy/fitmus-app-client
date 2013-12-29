@@ -2,7 +2,7 @@
 
 /* Controllers */
 
-function NoteCtrl($scope, connect, navigation, $rootScope, $sce) {
+function NoteCtrl($scope, connect, navigation, $rootScope, $sce, timeconverter) {
     var block,
         isLoadData = false;
     $scope.select_note = {};
@@ -18,6 +18,8 @@ function NoteCtrl($scope, connect, navigation, $rootScope, $sce) {
                 setBlock();
                 $scope.nodes = data;
                 console.log("note_page data update",data,$rootScope.select_date);
+                alert(JSON.stringify(data));
+                alert($rootScope.select_date);
                 selectTimestamp($rootScope.select_date);
                 $scope.$apply();
             });
@@ -32,8 +34,7 @@ function NoteCtrl($scope, connect, navigation, $rootScope, $sce) {
 
     function selectTimestamp(newDate){
         if($scope.nodes){
-            var date = new Date(newDate);
-            var newTimestamp = date.getTime()/1000 + 2 * date.getTimezoneOffset()*60;
+            var newTimestamp = timeconverter.convertDayToTimestamp(newDate);
             if(!$scope.nodes[newTimestamp]){
                 $scope.nodes[newTimestamp] = {
                     date: $rootScope.select_date,

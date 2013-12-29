@@ -2,7 +2,7 @@
 
 /* Controllers */
 
-function MainCtrl($scope, connect, navigation, $rootScope, $sce) {
+function MainCtrl($scope, connect, navigation, timeconverter, $rootScope, $sce) {
     var now = new Date(),
         isLoadData = false,
         block = false,
@@ -48,7 +48,7 @@ function MainCtrl($scope, connect, navigation, $rootScope, $sce) {
     },800),true);
     $rootScope.$watch('select_timestamp', selectExercise);
     $rootScope.$watch('select_date', function(newDate){
-        $rootScope.select_timestamp = convertDayToTimestamp(newDate);
+        $rootScope.select_timestamp = timeconverter.convertDayToTimestamp(newDate);
         //console.log("$rootScope.select_timestamp",$rootScope.select_timestamp);
     });
     $rootScope.$watch('trains', _.debounce(function(newTrains, oldTrains){
@@ -135,10 +135,6 @@ function MainCtrl($scope, connect, navigation, $rootScope, $sce) {
         setTimeout(function(){ block = false; },200);
     }
 
-    function convertDayToTimestamp(date){
-        var aDate = date.split("-");
-        return getMoscovTimeStamp(aDate[0],aDate[1]-1,aDate[2]-1);
-    }
 
     function addToDate(dayStr,dayNum){
         return XDate(dayStr).addDays(dayNum).toString("yyyy-MM-dd");
@@ -225,9 +221,5 @@ function MainCtrl($scope, connect, navigation, $rootScope, $sce) {
         updateList();
     }
 
-    function getMoscovTimeStamp(year,month,day){
-        var date = new Date(year,month,day+1, 12 - 4 - (new Date()).getTimezoneOffset()/60, 0, 0 );
-        return Math.floor(date.getTime()/1000);
-    }
 
 }
