@@ -54,6 +54,11 @@
         };
     })($.mobile.History.prototype.add);
 
+    $.mobile.History.prototype.clear = function(){
+        this.stack = [];
+        this.activeIndex = 0;
+    };
+
 
     var ua = navigator.userAgent.toLowerCase();
     if(ua.indexOf('msie') != -1){

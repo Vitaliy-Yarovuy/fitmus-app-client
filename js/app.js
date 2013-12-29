@@ -32,6 +32,7 @@
     global.app = angular.module('fitApp',[]);
     app.run(function($rootScope,connect){
         var run = _.once(function(){
+            $.mobile.navigate.history.clear();
             if(connect.isLogin()){
                 connect.getAll(function(err,data){
                     if(err){
