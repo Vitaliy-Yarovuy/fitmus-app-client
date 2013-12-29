@@ -50,6 +50,13 @@
                 $.mobile.loader("hide");
                 $.mobile.changePage("#auth_page");
             }
+            document.addEventListener("backbutton", function(e){
+                if($.mobile.navigate.history.activeIndex == 0){
+                    e.preventDefault();
+                    navigator.app.exitApp();
+                }
+            }, false);
+
         });
         document.addEventListener("deviceready", run, false);
         setTimeout(run, 3000);
