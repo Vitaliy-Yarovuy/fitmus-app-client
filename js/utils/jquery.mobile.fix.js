@@ -45,6 +45,16 @@
 
     });
 
+    $.mobile.History.prototype.add =(function(oldFunction){
+        return function(url, data){
+            if(url.indexOf("#") != -1){
+                console.log("history add", url, data);
+                oldFunction.call(this, url, data);
+            }
+        };
+    })($.mobile.History.prototype.add);
+
+
     var ua = navigator.userAgent.toLowerCase();
     if(ua.indexOf('msie') != -1){
         $("body").addClass("ie");
