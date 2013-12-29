@@ -2,6 +2,12 @@ app.directive('ngExerciseImg', function($compile, $rootScope, connect) {
     var rand = "?" + Math.random();
     return {
         scope: 'false',
+        /**
+         * link method of angular directive
+         * @param scope
+         * @param $element
+         * @param attrs
+         */
         link: function(scope, $element, attrs) {
             var fakeExercise = {id: -1, img: "./img/mans/man.png"},
                 exercisesUri = connect.getLocalExerciseUri(),

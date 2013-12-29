@@ -1,3 +1,6 @@
+/**
+ * angular filter that sort and add offset (using in array of numbers)
+ */
 app.filter('orderIntKey', function() {
     return function( items, offset ) {
         var filtered = [];

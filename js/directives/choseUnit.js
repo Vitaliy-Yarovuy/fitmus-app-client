@@ -1,5 +1,11 @@
 app.directive('ngChoseUnit', function($compile, $rootScope) {
 
+    /**
+     * method that save data to angular scope by variable name (and namespace)
+     * @param scope
+     * @param path
+     * @param value
+     */
     function setData(scope,path,value){
         var key,
             pathEls = path.split("."),

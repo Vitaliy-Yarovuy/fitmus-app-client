@@ -1,4 +1,9 @@
 (function(global,undefined){
+    /**
+     * seansor for remove Circular link in json stringify function
+     * @param censor
+     * @returns {Function}
+     */
     function censor(censor) {
         var i = 0;
         return function(key, value) {
@@ -11,6 +16,9 @@
         }
     }
 
+    /**
+     * jquery init some stuff
+     */
     jQuery( function() {
         $(".hide").removeClass("hide");
         jQuery( "body>[data-role='panel']" ).panel();
@@ -20,6 +28,9 @@
         });
     });
 
+    /**
+     * preloader on app start
+     */
     $.mobile.loading( 'show', {
         text: "loading",
         textVisible: true,
@@ -27,9 +38,16 @@
         textonly: false,
         html: ""
     });
+    /**
+     * not use transition on page change
+     * @type {string}
+     */
     $.mobile.defaultPageTransition = 'none';
 
     global.app = angular.module('fitApp',[]);
+    /**
+     * app init function
+     */
     app.run(function($rootScope,connect){
         var run = _.once(function(){
             $.mobile.navigate.history.clear();
@@ -66,6 +84,9 @@
 
 
     localStorage["error-log"] = "";
+    /**
+     * log errors in scripts in localStorage
+     */
     global.onerror = function(){
         var args = [].slice.call(arguments);
         localStorage["error-log"] += "|" + JSON.stringify(args,censor(args));

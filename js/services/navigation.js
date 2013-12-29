@@ -26,6 +26,11 @@ app.factory('navigation',function ($rootScope){
     }/*,350)*/);
 
     return {
+        /**
+         * add listener to before change event
+         * @param page
+         * @param callback
+         */
         beforePageChange: function(page, callback){
             if(pagesChangeListener[page]){
                 pagesChangeListener[page].push(callback);
@@ -33,6 +38,11 @@ app.factory('navigation',function ($rootScope){
                 pagesChangeListener[page] = [callback];
             }
         },
+        /**
+         * add listener to before leave event
+         * @param page
+         * @param callback
+         */
         beforePageLeave: function(page, callback){
             if(pagesLeaveListener[page]){
                 pagesLeaveListener[page].push(callback);
@@ -40,6 +50,9 @@ app.factory('navigation',function ($rootScope){
                 pagesLeaveListener[page] = [callback];
             }
         },
+        /**
+         * refresh current page (generate change event for current page )
+         */
         refresh:function(){
             if(pagesChangeListener[page_name]){
                 pagesChangeListener[page_name].forEach(function(listener){

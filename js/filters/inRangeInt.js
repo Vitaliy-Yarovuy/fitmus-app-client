@@ -1,3 +1,6 @@
+/**
+ * angular filter that checks on entering into an array
+ */
 app.filter('inRangeInt', function() {
     return function( items, range ) {
         var filtered = [];

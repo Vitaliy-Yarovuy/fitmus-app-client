@@ -7,6 +7,10 @@ function AuthCtrl($scope, connect) {
     $scope.user="u1u1u1";
     $scope.pass="t1t1t1";
 
+    /**
+     * login app controller trigger
+     * @returns {boolean}
+     */
     $scope.login = function(){
         $.mobile.loading( 'show', {
             text: "loading",

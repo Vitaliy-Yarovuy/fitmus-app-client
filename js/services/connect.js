@@ -8,6 +8,7 @@ app.factory('connect',function ($rootScope){
         app_sign = "1",//md5(app_id + app_key);
         sourcePath,
         exerciseSources = {},
+        forceToUpdate = false,
         defaultSettings = {
             is_show_time: true,
             is_auto_update: true,
@@ -22,6 +23,10 @@ app.factory('connect',function ($rootScope){
             settings: defaultSettings
         }, loginListeners = [];
 
+    /**
+     * user settings
+     * @type {{is_show_time: boolean, is_auto_update: boolean, weight_unit: number, distance_unit: number}}
+     */
     $rootScope.settings = defaultSettings;
 
     function censor(censor) {
@@ -36,7 +41,11 @@ app.factory('connect',function ($rootScope){
         }
     }
 
+
     localStorage["console-log"] = "";
+    /**
+     * override log function to save log data in localStorage
+     */
     console.log = (function(oldFunc){
         return function(){
             var args = [].slice.call(arguments),
@@ -47,10 +56,16 @@ app.factory('connect',function ($rootScope){
         };
     })(console.log);
 
+    /**
+     * save user data to localStorage
+     */
     function saveToLocalStorage(){
         window.localStorage["fitmus-app-user-data"] = JSON.stringify(_.cloneCleaner(userData));
     }
 
+    /**
+     * load user data from  localStorage
+     */
     function loadFromLocalStorage(){
         if(window.localStorage["fitmus-app-user-data"]){
             userData = JSON.parse(window.localStorage["fitmus-app-user-data"]);
@@ -60,22 +75,37 @@ app.factory('connect',function ($rootScope){
         }
     }
 
+    /**
+     * save link to exercise image that save on device to localStorage
+     */
     function saveExerciseUri(){
         window.localStorage["fitmus-app-exercises"] = JSON.stringify(_.cloneCleaner(exerciseSources));
     }
 
+    /**
+     * load link to exercise image that save on device from localStorage
+     */
     function loadExerciseUri(){
         if(window.localStorage["fitmus-app-exercises"]){
             exerciseSources = JSON.parse(window.localStorage["fitmus-app-exercises"]);
         }
     }
 
+    /**
+     * show info message for user
+     * @param messages
+     */
     function showInfo(messages){
         _.each(messages,function(message){
             alert(message);
         });
     }
 
+    /**
+     * make "get" request to get json with all needed credentials
+     * @param url
+     * @param callback
+     */
     function getJSON(url,callback){
         if(!userData.user){
             callback({
@@ -98,6 +128,12 @@ app.factory('connect',function ($rootScope){
         });
     }
 
+    /**
+     * make "POST" request to post json with all needed credentials
+     * @param url
+     * @param data
+     * @param callback
+     */
     function postJSON(url,data,callback){
         if(!userData.user){
             callback({
@@ -126,6 +162,11 @@ app.factory('connect',function ($rootScope){
         });
     }
 
+    /**
+     * download image exercise and save it on device on "sourcePath" holder
+     * @param id_exercise
+     * @param cb
+     */
     function downloadSource(id_exercise, cb){
         var exercise = userData.data.exercise[id_exercise];
         var run = function(){
@@ -155,6 +196,10 @@ app.factory('connect',function ($rootScope){
         run();
     }
 
+    /**
+     * begin download exercise images
+     * @param data
+     */
     function startDownloadSource(data){
         fUtils.getFileSystem(function(err, fileSystem){
             if(err){
@@ -180,6 +225,11 @@ app.factory('connect',function ($rootScope){
         });
     }
 
+    /**
+     * mark data to control it changed
+     * @param collection
+     * @returns {*}
+     */
     function markRecord(collection){
         _.forEach(collection,function(item){
             item.$$_status = "sync";
@@ -188,18 +238,36 @@ app.factory('connect',function ($rootScope){
     }
 
     return {
+        /**
+         * return exercise image source collection
+         * @returns {{}}
+         */
         getLocalExerciseUri: function(){
            return exerciseSources;
         },
+        /**
+         * check app login state
+         * @returns {boolean}
+         */
         isLogin: function(){
             loadFromLocalStorage();
             loadExerciseUri();
             $rootScope.settings = userData.settings;
             return !!userData.user;
         },
+        /**
+         * add listener on on login event
+         * @param callback
+         */
         onLogin:function(callback){
             loginListeners.push(callback);
         },
+        /**
+         * login app
+         * @param login
+         * @param pass
+         * @param callback
+         */
         login: function (login, pass, callback){
             $.getJSON(rootUrl+"login/",{
                 app_id: app_id,
@@ -220,6 +288,10 @@ app.factory('connect',function ($rootScope){
                 },null);
             });
         },
+        /**
+         * logout app
+         * @param callback
+         */
         logout: function (callback){
             userData = {
                 user: null,
@@ -230,8 +302,12 @@ app.factory('connect',function ($rootScope){
             saveToLocalStorage();
             callback && callback();
         },
+        /**
+         * get data from server or cached data (it include exercise, mode, musclegroup, musclegroup_exercise, units)
+         * @param callback
+         */
         getData: function(callback){
-            if(userData.data && !navigator.onLine && !userData.settings.is_auto_update){
+            if(userData.data && !navigator.onLine &&  !userData.settings.is_auto_update && !forceToUpdate){
                 startDownloadSource(userData.data||{});
                 callback(null, userData.data);
                 return;
@@ -242,8 +318,12 @@ app.factory('connect',function ($rootScope){
                 callback(err, data);
             });
         },
+        /**
+         * get train from server or cached data
+         * @param callback
+         */
         getTrain: function(callback){
-            if(userData.train && !navigator.onLine && !userData.settings.is_auto_update){
+            if(userData.train && !navigator.onLine && !userData.settings.is_auto_update && !forceToUpdate){
                 callback(null, userData.train);
                 return;
             }
@@ -253,8 +333,12 @@ app.factory('connect',function ($rootScope){
                 callback(err, data);
             });
         },
+        /**
+         * get note from server or cached data
+         * @param callback
+         */
         getNote: function(callback){
-            if(userData.note && !navigator.onLine && !userData.settings.is_auto_update){
+            if(userData.note && !navigator.onLine && !userData.settings.is_auto_update && !forceToUpdate){
                 callback(null, userData.note);
                 return;
             }
@@ -264,6 +348,10 @@ app.factory('connect',function ($rootScope){
                 callback(err, data);
             });
         },
+        /**
+         * get all user data that can get from server or cached data
+         * @param callback
+         */
         getAll:function(callback){
             async.parallel({
                 data: this.getData,
@@ -281,7 +369,12 @@ app.factory('connect',function ($rootScope){
                 callback(err,data);
             });
         },
+        /**
+         * put data to save on server and update on client
+         * @param callback
+         */
         sync: function(callback){
+            forceToUpdate = true;
             async.parallel({
                 note: function(cb){
                     var toUpdate = {};
@@ -310,6 +403,7 @@ app.factory('connect',function ($rootScope){
                     });
                 }
             },function(err, data){
+                forceToUpdate = false
                 $rootScope.$broadcast('sync', true);
                 saveToLocalStorage();
                 callback(err,data);

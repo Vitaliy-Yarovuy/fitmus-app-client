@@ -1,5 +1,9 @@
 app.directive('ngApproach', function ($compile, $rootScope, $timeout) {
 
+    /**
+     * full name for units
+     * @type {{c: string, d: string, l: string, t: string, w: string}}
+     */
     var unit_names = {
         c: "count",
         d: "distance",
@@ -8,6 +12,10 @@ app.directive('ngApproach', function ($compile, $rootScope, $timeout) {
         w: "weight"
     };
 
+    /**
+     * default id of units
+     * @type {{c: number, d: number, l: number, t: number, w: number}}
+     */
     $rootScope.defaultUnits = {
         c: 1,
         d: 1,
@@ -15,6 +23,10 @@ app.directive('ngApproach', function ($compile, $rootScope, $timeout) {
         t: 1,
         w: 1
     };
+
+    /**
+     * listener settings changes
+     */
     $rootScope.$watch("settings",function(settings){
         if(settings){
             $rootScope.defaultUnits.w = settings.weight_unit;
@@ -22,6 +34,13 @@ app.directive('ngApproach', function ($compile, $rootScope, $timeout) {
         }
     },true);
 
+    /**
+     * method that save data to angular scope by variable name (and namespace)
+     * @param scope
+     * @param path
+     * @param value
+     * @param isSilent
+     */
     function setData(scope, path, value, isSilent) {
         console.log("setData",path, value, isSilent);
         var key,
@@ -39,12 +58,23 @@ app.directive('ngApproach', function ($compile, $rootScope, $timeout) {
         isSilent || scope.$apply();
     }
 
+    /**
+     * convert second to human readable state
+     * @param time
+     * @returns {*}
+     */
     function toTime(time) {
         return sprintf("%02d:%02d", Math.floor(time / 60), time % 60);
     }
 
     return {
         scope: 'false',
+        /**
+         * link method of angular directive
+         * @param scope
+         * @param $element
+         * @param attrs
+         */
         link: function (scope, $element, attrs) {
             var data = scope.$eval(attrs.ngApproach),
                 oldApproach = scope.$eval(attrs.ngApproachOld),

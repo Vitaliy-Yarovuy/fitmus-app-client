@@ -10,8 +10,15 @@ function MainCtrl($scope, connect, navigation, timeconverter, $rootScope, $sce) 
         is_replace = false,
         timestamps = [];
 
+    /**
+     * is edit mode( can move/replace/delete/add exercise)
+     * @type {boolean}
+     */
     $scope.edit_mode = false;
 
+    /**
+     * before enter to page trigger
+     */
     navigation.beforePageChange("main_page",function(id_add_exercise, id_muscle_group){
         var run = function(){
             if(id_add_exercise){
@@ -37,20 +44,33 @@ function MainCtrl($scope, connect, navigation, timeconverter, $rootScope, $sce) 
         }
     });
 
+    /**
+     * trigger for synchronize event
+     */
     $rootScope.$on('sync', function(){
         isLoadData = false;
     });
 
+    /**
+     * update timestamps
+     */
     $rootScope.$watch('trains',_.debounce(function(trains){
         if(trains){
             timestamps = Object.keys(trains).sort();
         }
     },800),true);
+    /**
+     * watch date change
+     */
     $rootScope.$watch('select_timestamp', selectExercise);
     $rootScope.$watch('select_date', function(newDate){
         $rootScope.select_timestamp = timeconverter.convertDayToTimestamp(newDate);
         //console.log("$rootScope.select_timestamp",$rootScope.select_timestamp);
     });
+
+    /**
+     * check trains status is it change and need save to server
+     */
     $rootScope.$watch('trains', _.debounce(function(newTrains, oldTrains){
         if(!block && oldTrains){
             var diff = _.diff(oldTrains,newTrains);
@@ -62,17 +82,29 @@ function MainCtrl($scope, connect, navigation, timeconverter, $rootScope, $sce) 
 
     //timestamp on Moscov time +4h
     $rootScope.select_date = XDate(now).toString("yyyy-MM-dd");
+    /**
+     * select next day
+     */
     $rootScope.nextDay = function(){
         $rootScope.select_date = addToDate($rootScope.select_date,1);
     };
+    /**
+     * select prev day
+     */
     $rootScope.prevDay = function(){
         $rootScope.select_date = addToDate($rootScope.select_date,-1);
     };
+    /**
+     * toggle edit state
+     */
     $scope.toggleState = function(){
         $scope.edit_mode = !$scope.edit_mode;
         console.log('$scope.edit_mode',$scope.edit_mode);
     };
-
+    /**
+     * move exercise up in list
+     * @param train
+     */
     $scope.positionUp = function(train){
         var upperTrain,index = $scope.select_trains.indexOf(train),
             position = train.position;
@@ -83,6 +115,10 @@ function MainCtrl($scope, connect, navigation, timeconverter, $rootScope, $sce) 
             selectExercise($rootScope.select_timestamp);
         }
     };
+    /**
+     * move exercise down in list
+     * @param train
+     */
     $scope.positionDown = function(train){
         var downerTrain,index = $scope.select_trains.indexOf(train),
             position = train.position;
@@ -93,26 +129,47 @@ function MainCtrl($scope, connect, navigation, timeconverter, $rootScope, $sce) 
             selectExercise($rootScope.select_timestamp);
         }
     };
+    /**
+     * remove exercise
+     * @param train
+     */
     $scope.remove = function(train){
         train.status = "Deleted";
         selectExercise($rootScope.select_timestamp);
     };
+    /**
+     * add exercise after
+     * @param train
+     */
     $scope.addAfter = function(train){
         insert_index  = $scope.select_trains.indexOf(train)+1;
         is_replace  = false;
         $.mobile.changePage("#select_muscle_page",{transition:"none"});
     };
+    /**
+     * replace exercise
+     * @param train
+     */
     $scope.replace = function(train){
         insert_index  = $scope.select_trains.indexOf(train)+1;
         is_replace  = true;
         $.mobile.changePage("#select_muscle_page",{transition:"none"});
     };
+    /**
+     * select exercise and go to exercise page
+     * @param train
+     */
     $scope.select = function(train){
         $rootScope.select_train = train;
         $rootScope.select_train_old = findOldTrain(train);
         $.mobile.changePage("#exercise_page",{transition:"none"});
     };
 
+    /**
+     * get already exist train for avoid duplication
+     * @param selectTrain
+     * @returns {*}
+     */
     function findOldTrain(selectTrain){
         var timestamp = $rootScope.select_timestamp,
             availableTimestamp = timestamps.filter(function(time){
@@ -130,22 +187,40 @@ function MainCtrl($scope, connect, navigation, timeconverter, $rootScope, $sce) 
         return oldTrain;
     }
 
+    /**
+     * stop listen change train for small time (need for update data)
+     */
     function setBlock(){
         block = true;
         setTimeout(function(){ block = false; },200);
     }
 
 
+    /**
+     * add days to date
+     * @param dayStr
+     * @param dayNum
+     * @returns {*|String|string}
+     */
     function addToDate(dayStr,dayNum){
         return XDate(dayStr).addDays(dayNum).toString("yyyy-MM-dd");
     }
 
+    /**
+     * normalise train numbers in list
+     * @param trains
+     */
     function normalisePosition(trains){
         trains.forEach(function(train,index){
             train.position = index + 1;
         });
     }
 
+    /**
+     * add train by exercise and group
+     * @param id_exercise
+     * @param id_muscle_group
+     */
     function addExercise(id_exercise, id_muscle_group){
         var timestamp = $rootScope.select_timestamp,train;
 
@@ -193,10 +268,19 @@ function MainCtrl($scope, connect, navigation, timeconverter, $rootScope, $sce) 
         updateList();
     }
 
+    /**
+     * update list need for jquery mobile
+     * @type {Function}
+     */
     var updateList = _.debounce(function(){
         $('#main_page [data-role="listview" ]').listview().listview("refresh");
     },10);
 
+    /**
+     * handler for select timestamp
+     * @param timestamp
+     * @param oldTimestamp
+     */
     function selectExercise(timestamp, oldTimestamp) {
         var trains;
         if($rootScope.trains){

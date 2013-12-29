@@ -1,11 +1,11 @@
-    'use strict';
+'use strict';
 
 /* Controllers */
 
 function SettingsCtrl($scope, connect, navigation, $rootScope) {
     var isLoadData = false;
 
-    // move to connect
+    // moved to connect
     //$rootScope.settings = {
     //    is_show_time: true,
     //    is_auto_update: true,
@@ -14,16 +14,17 @@ function SettingsCtrl($scope, connect, navigation, $rootScope) {
     //};
 
 
-    $rootScope.$watch("settings",function(newSetting){
-        console.log("settings",newSetting);
-    });
-
-
+    /**
+     * logout trigger
+     */
     $scope.logout = function(){
         connect.logout();
         $.mobile.changePage("#auth_page",{transition:"none"});
     };
 
+    /**
+     * before enter to page trigger
+     */
     navigation.beforePageChange("settings_page",function(){
         if(!isLoadData){
             connect.getData(function(err,data){

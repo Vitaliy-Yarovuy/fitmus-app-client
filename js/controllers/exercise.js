@@ -4,6 +4,9 @@
 
 function ExerciseCtrl($scope, connect, navigation, $rootScope, $sce, $timeout) {
 
+    /**
+     * before enter to page trigger
+     */
     navigation.beforePageChange("exercise_page",function(){
         if($rootScope.select_train && !$rootScope.select_train.result){
             addEmptyResult();
@@ -19,6 +22,10 @@ function ExerciseCtrl($scope, connect, navigation, $rootScope, $sce, $timeout) {
         $rootScope.$broadcast("stopTimer",null);
     });
 
+    /**
+     * remove approach from results
+     * @param index
+     */
     $scope.remove = function(index){
         var isRemove = confirm("Удалить "+index+" подход ?");
         if(!isRemove){
@@ -33,11 +40,20 @@ function ExerciseCtrl($scope, connect, navigation, $rootScope, $sce, $timeout) {
         updateList();
     };
 
+    /**
+     * flag to show remove button ( last approach cannot be deleted )
+     * @param index
+     * @returns {boolean}
+     */
     $scope.isShowRemoveBtn = function(index){
         var key = Object.keys($rootScope.select_train.result).length;
         return parseInt(index) != key;
     };
 
+    /**
+     * auto add empty approach at end results
+     * @type {*|function()}
+     */
     var unWatch = $rootScope.$watch("select_train",function(newTrain){
         if(newTrain){
             $rootScope.$watch("select_train.result",function(newResult){
@@ -54,10 +70,17 @@ function ExerciseCtrl($scope, connect, navigation, $rootScope, $sce, $timeout) {
         }
     });
 
+    /**
+     * update list need for jquery mobile
+     * @type {Function}
+     */
     var updateList = _.debounce(function(){
         $('#exercise_page [data-role="listview" ]').listview().listview("refresh");
     },10);
 
+    /**
+     * add empty approach
+     */
     function addEmptyResult(){
         if(!$rootScope.select_train.result){
             $rootScope.select_train.result = {};

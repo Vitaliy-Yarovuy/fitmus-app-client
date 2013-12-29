@@ -2,6 +2,12 @@ app.directive('ngChoseMode', function($compile, $rootScope) {
 
     return {
         scope: 'false',
+        /**
+         * link method of angular directive
+         * @param scope
+         * @param element
+         * @param attrs
+         */
         link: function(scope, element, attrs) {
             $(element).find("[ng-next-mode]").on("click",function(){
                 var train = scope.$eval(attrs.ngChoseMode);

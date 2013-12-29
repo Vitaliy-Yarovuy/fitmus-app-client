@@ -4,6 +4,9 @@
 
 function MenuCtrl($scope, connect, navigation, $rootScope, $sce) {
 
+    /**
+     * trigger to synchronize user data
+     */
     $scope.sync = function () {
         jQuery("#main_menu").panel("close");
         $.mobile.loading('show', {
@@ -27,6 +30,9 @@ function MenuCtrl($scope, connect, navigation, $rootScope, $sce) {
         },10);
     };
 
+    /**
+     * exit from app
+     */
     $scope.exit = function () {
         jQuery("#main_menu").panel("close");
         $.mobile.loading('show', {
@@ -43,6 +49,9 @@ function MenuCtrl($scope, connect, navigation, $rootScope, $sce) {
     };
 
 
+    /**
+     * open/close menu
+     */
     jQuery(".main_menu-link").on("click", function () {
         jQuery("#main_menu").panel("toggle");
         return false;
