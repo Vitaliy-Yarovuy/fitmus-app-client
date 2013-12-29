@@ -54,6 +54,8 @@
                 if($.mobile.navigate.history.activeIndex == 0){
                     e.preventDefault();
                     navigator.app.exitApp();
+                }else{
+                    navigator.app.backHistory();
                 }
             }, false);
 
