@@ -17,9 +17,7 @@ function NoteCtrl($scope, connect, navigation, $rootScope, $sce, timeconverter) 
                 isLoadData = true;
                 setBlock();
                 $scope.nodes = data;
-                console.log("note_page data update",data,$rootScope.select_date);
-                alert(JSON.stringify(data));
-                alert($rootScope.select_date);
+                //console.log("note_page data update",data,$rootScope.select_date);
                 selectTimestamp($rootScope.select_date);
                 $scope.$apply();
             });
