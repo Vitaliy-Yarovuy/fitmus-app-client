@@ -15,19 +15,20 @@ function MenuCtrl($scope, connect, navigation, $rootScope, $sce) {
         });
         var page = $.mobile.activePage.attr('id');
         setTimeout(function(){
-            $.mobile.changePage("#empty_page", {transition: "none"});
-        },10)
-        setTimeout(function(){
             connect.sync(function () {
                 setTimeout(function(){
-                    $.mobile.changePage("#"+page, {transition: "none"});
+                    $.mobile.changePage("#"+page, {
+                        allowSamePageTransition: true,
+                        transition: 'none',
+                        reloadPage: true
+                    });
                     $.mobile.loading("hide");
                     setTimeout(function(){
                         $("#"+page).jqmData( "panel", null );
-                    },800);
-                },300);
+                    },600);
+                },10);
             });
-        },300);
+        },10);
     };
 
     $scope.exit = function () {
