@@ -105,8 +105,8 @@ body.ui-overlay-a {
 .ui-input-has-additional .ui-input-add.two-line {
   font-size: .8em;
   line-height: 1.6;
-  padding-top: .2em;
-  padding-bottom: .5em;
+  padding-top: .25em;
+  padding-bottom: .55em;
   background: #00FFBA;
   color: #000;
 }
