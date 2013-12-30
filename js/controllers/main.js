@@ -26,7 +26,9 @@ function MainCtrl($scope, connect, navigation, timeconverter, $rootScope, $sce, 
             }else{
                 setBlock();
             }
+            selectExercise($rootScope.select_timestamp);
             $scope.$apply();
+            $rootScope.$apply();
         };
         if(isLoadData){
             run();
@@ -38,7 +40,6 @@ function MainCtrl($scope, connect, navigation, timeconverter, $rootScope, $sce, 
                 }
                 isLoadData = true;
                 $rootScope.trains = data;
-                selectExercise($rootScope.select_timestamp);
                 run();
             });
         }
