@@ -10,6 +10,10 @@ app.directive('ngMobipickTime', function($rootScope) {
         link: function(scope, element, attrs) {
             //var eScope = scope.$eval(attrs.ngMobipickRoot) ? $rootScope : scope;
             $(element).mobipickTime({
+                buttonTheme: "a",
+                popup: {
+                    theme: "b"
+                }
             });
         }
     };

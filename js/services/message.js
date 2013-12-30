@@ -25,7 +25,7 @@ app.factory('message',function ($rootScope){
                 message,                  // message
                 callback || function(){}, // callback to invoke with index of button pressed
                 'Подтверждение',          // title
-                'Применить,Отменить'      // buttonLabels
+                'подтвердить,отменить'      // buttonLabels
             );
         }
     };

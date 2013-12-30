@@ -16,7 +16,7 @@ $.widget( "sustainablepace.mobipickTime", $.mobile.widget, {
 		dateFormat      : "mm:ss",
 		//dateFormatMinute : "yyyy-MM",
 		//dateFormatYear  : "yyyy",
-		locale          : "en",
+        locale          : "ru",
 		intlStdDate     : true,
 		buttonTheme     : "b",
 		popup           : { 

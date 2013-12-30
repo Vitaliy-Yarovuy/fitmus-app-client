@@ -16,7 +16,7 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 		dateFormat      : "yyyy-MM-dd",
 		dateFormatMonth : "yyyy-MM",
 		dateFormatYear  : "yyyy",
-		locale          : "en",
+		locale          : "ru",
 		intlStdDate     : true,
 		buttonTheme     : "b",
 		popup           : { 
@@ -309,7 +309,7 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 	//
 	_markup: "<div class='mobipick-main'><div class='mobipick-date-formatted'>Date</div><ul class='mobipick-groups'><li><ul><li><a class='mobipick-next-day'>+</a></li><li><input type='text' class='mobipick-input mobipick-day' /></li><li><a class='mobipick-prev-day'>-</a></li></ul></li><li><ul><li><a class='mobipick-next-month'>+</a></li><li><input type='text' class='mobipick-input mobipick-month' /></li><li><a class='mobipick-prev-month'>-</a></li></ul></li><li><ul><li><a class='mobipick-next-year'>+</a></li><li><input type='text' class='mobipick-input mobipick-year' /></li><li><a class='mobipick-prev-year'>-</a></li></ul></li></ul><ul class='mobipick-buttons'><li><a class='mobipick-set'>Set</a></li><li><a class='mobipick-cancel'>Cancel</a></li></ul></div>",
 	_applyTheme: function() {
-		var p       = this._picker,
+		var p = this._picker,
 		    buttons = {
 		        "bottom": "ul.mobipick-groups ul > li:first-child > a",
 		        "top":    "ul.mobipick-groups ul > li:last-child > a"

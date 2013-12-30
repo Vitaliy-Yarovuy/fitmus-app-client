@@ -85,7 +85,7 @@
               <p>{{musclegroups[select_train.id_muscle_group]}}</p><a href="#" ng-next-mode="ng-next-mode" class="ui-btn ui-btn-no-border ui-btn-bottom-right"><i class="fit-icon-mid fit-icon-charge no-text-shadow"></i></a>
             </div>
           </li>
-          <li ng-repeat="(index,approach) in select_train.result| orderIntKey:-1">
+          <li ng-repeat="(index,approach) in select_train.result| orderIntKey:-1" class="no-text-shadow">
             <div ng-approach="approach" ng-approach-old="select_train_old.result[index+1]">
               <table>
                 <tr>
@@ -208,9 +208,9 @@
       <ul>
         <li><a href="#main_page"><i class="fit-icon-schedules"></i>Расписание</a></li>
         <li><a href="#note_page"><i class="fit-icon-edit"></i>Записи</a></li>
-        <li><a href="#" ng-click="sync()"><i class="fit-icon-save"></i>Синзронизацыя</a></li>
+        <li><a href="#" ng-click="sync()"><i class="fit-icon-save"></i>Синхронизация</a></li>
         <li><a href="#settings_page"><i class="fit-icon-settings"></i>Настройка</a></li>
-        <li><a href="#" ng-click="exit()"><i class="fit-icon-exit"></i>Виход</a></li>
+        <li><a href="#" ng-click="exit()"><i class="fit-icon-exit"></i>Выход</a></li>
       </ul>
     </div>
     <script src="./cordova.js"></script>

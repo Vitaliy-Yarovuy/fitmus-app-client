@@ -2,7 +2,7 @@
 
 /* Controllers */
 
-function ExerciseCtrl($scope, connect, navigation, $rootScope, $sce, $timeout) {
+function ExerciseCtrl($scope, connect, navigation, $rootScope, $sce, $timeout, message) {
 
     /**
      * before enter to page trigger
@@ -27,17 +27,17 @@ function ExerciseCtrl($scope, connect, navigation, $rootScope, $sce, $timeout) {
      * @param index
      */
     $scope.remove = function(index){
-        var isRemove = confirm("Удалить "+index+" подход ?");
-        if(!isRemove){
-            return ;
-        }
-        delete $rootScope.select_train.result[index];
-        while($rootScope.select_train.result[index+1]){
-            $rootScope.select_train.result[index] = $rootScope.select_train.result[index+1];
-            index += 1;
-        }
-        delete $rootScope.select_train.result[index];
-        updateList();
+        message.confirm("Удалить "+index+" подход ?", function(answer){
+            if(answer){
+                delete $rootScope.select_train.result[index];
+                while($rootScope.select_train.result[index+1]){
+                    $rootScope.select_train.result[index] = $rootScope.select_train.result[index+1];
+                    index += 1;
+                }
+                delete $rootScope.select_train.result[index];
+                updateList();
+            }
+        });
     };
 
     /**
