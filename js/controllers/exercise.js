@@ -28,8 +28,7 @@ function ExerciseCtrl($scope, connect, navigation, $rootScope, $sce, $timeout, m
      */
     $scope.remove = function(index){
         message.confirm("Удалить "+index+" подход ?", function(answer){
-            alert('You selected button ' + answer);
-            if(answer){
+            if(answer == 1){
                 delete $rootScope.select_train.result[index];
                 while($rootScope.select_train.result[index+1]){
                     $rootScope.select_train.result[index] = $rootScope.select_train.result[index+1];
