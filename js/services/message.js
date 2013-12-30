@@ -21,7 +21,7 @@ app.factory('message',function ($rootScope){
          * @param callback
          */
         confirm: function(message, callback){
-            navigator.notification.alert(
+            navigator.notification.confirm(
                 message,                  // message
                 callback || function(){}, // callback to invoke with index of button pressed
                 'Подтверждение',          // title
