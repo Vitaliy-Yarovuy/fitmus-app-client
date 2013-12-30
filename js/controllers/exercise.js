@@ -36,6 +36,7 @@ function ExerciseCtrl($scope, connect, navigation, $rootScope, $sce, $timeout, m
                 }
                 delete $rootScope.select_train.result[index];
                 updateList();
+                $rootScope.$apply();
             }
         });
     };
