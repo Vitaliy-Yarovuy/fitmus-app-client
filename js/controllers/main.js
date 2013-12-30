@@ -2,7 +2,7 @@
 
 /* Controllers */
 
-function MainCtrl($scope, connect, navigation, timeconverter, $rootScope, $sce) {
+function MainCtrl($scope, connect, navigation, timeconverter, $rootScope, $sce, message) {
     var now = new Date(),
         isLoadData = false,
         block = false,
@@ -33,7 +33,7 @@ function MainCtrl($scope, connect, navigation, timeconverter, $rootScope, $sce) 
         }else{
             connect.getTrain(function(err,data){
                 if(err){
-                    alert(err.message);
+                    message.alert(err.message);
                     return ;
                 }
                 isLoadData = true;

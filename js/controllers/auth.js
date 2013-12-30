@@ -2,7 +2,7 @@
 
 /* Controllers */
 
-function AuthCtrl($scope, connect) {
+function AuthCtrl($scope, connect, message) {
 
     $scope.user="u1u1u1";
     $scope.pass="t1t1t1";
@@ -22,13 +22,13 @@ function AuthCtrl($scope, connect) {
         connect.login($scope.user,$scope.pass,function(err, data){
             if(err){
                 $.mobile.loading("hide");
-                alert(err.message);
+                message.alert(err.message);
                 return ;
             }
             connect.getAll(function(err,data){
                 if(err){
                     $.mobile.loading("hide");
-                    alert(err.message);
+                    message.alert(err.message);
                     return ;
                 }
                 $.mobile.loader("hide");

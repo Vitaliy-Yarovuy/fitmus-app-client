@@ -2,7 +2,7 @@
 
 /* Controllers */
 
-function SettingsCtrl($scope, connect, navigation, $rootScope) {
+function SettingsCtrl($scope, connect, navigation, $rootScope, message) {
     var isLoadData = false;
 
     // moved to connect
@@ -29,7 +29,7 @@ function SettingsCtrl($scope, connect, navigation, $rootScope) {
         if(!isLoadData){
             connect.getData(function(err,data){
                 if(err){
-                    alert(err.message);
+                    message.alert(err.message);
                     return ;
                 }
                 isLoadData = true;

@@ -2,7 +2,7 @@
 
 /* Controllers */
 
-function NoteCtrl($scope, connect, navigation, $rootScope, $sce, timeconverter) {
+function NoteCtrl($scope, connect, navigation, $rootScope, $sce, timeconverter, message) {
     var block,
         isLoadData = false;
     $scope.select_note = {};
@@ -14,7 +14,7 @@ function NoteCtrl($scope, connect, navigation, $rootScope, $sce, timeconverter) 
         if(!isLoadData){
             connect.getNote(function(err,data){
                 if(err){
-                    alert(err.message);
+                    message.alert(err.message);
                     return ;
                 }
                 isLoadData = true;

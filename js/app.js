@@ -48,14 +48,14 @@
     /**
      * app init function
      */
-    app.run(function($rootScope,connect){
+    app.run(function($rootScope,connect,message){
         var run = _.once(function(){
             $.mobile.navigate.history.clear();
             if(connect.isLogin()){
                 connect.getAll(function(err,data){
                     if(err){
                         $.mobile.loading("hide");
-                        alert(err.message);
+                        message.alert(err.message);
                         return ;
                     }
                     $.mobile.loader("hide");

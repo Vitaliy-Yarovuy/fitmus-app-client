@@ -1,6 +1,6 @@
 'use strict';
 
-app.factory('connect',function ($rootScope){
+app.factory('connect',function ($rootScope, message){
     var rootUrl = "http://dev.fitmus.com/api/v3/",
         rand = Math.random(),
         app_id = "1",
@@ -96,8 +96,10 @@ app.factory('connect',function ($rootScope){
      * @param messages
      */
     function showInfo(messages){
-        _.each(messages,function(message){
-            alert(message);
+        async.eachSeries(messages, function(message, callback){
+            message.alert(message, callback);
+        }, function(){
+
         });
     }
 
